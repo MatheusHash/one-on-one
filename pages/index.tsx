@@ -1,8 +1,9 @@
-import HelloWorld from '../assets/components/HelloWorld';
-
-
+import { faGhost  } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function Home() {
   return (
-   <HelloWorld />
+    <>
+        <FontAwesomeIcon icon={faGhost} fontSize='200px' />
+    </>
   )
 }
