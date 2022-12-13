@@ -24,15 +24,14 @@ interface Props {
                 </S.Main>
 
                 <S.Content>
-                    
                     <S.Header>
                             {/* <S.InputSearch placeholder="Pesquisar 1on1 ou Pessoa" type="text" /> */}
                             <InputSearch Placeholder="Pesquisar 1on1 ou Pessoa" Icon={faMagnifyingGlass} />
                             <S.AddButton>Adicionar 1on1 +</S.AddButton>
                     </S.Header>
 
-
                     <S.Section>{children}</S.Section>
+
                 </S.Content>
 
             </S.GridMainLayout>
