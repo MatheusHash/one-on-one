@@ -16,6 +16,7 @@ export const Button = styled.button`
     height: 100%;
     border: hidden;
     background: transparent;
+    color: black;
     :focus{
         outline: none;
         }
