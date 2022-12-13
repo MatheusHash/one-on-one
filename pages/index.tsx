@@ -12,10 +12,9 @@ const Home: NextPage = ()=> {
   return (
     <>
       
-      <Input Placeholder={'digite seu email'} Icon={'function'}/>
+      <Input Placeholder={'digite seu email'} Icon={faGhost}/>
       <FontAwesomeIcon icon={faGhost} fontSize='200px' />
       <ButtonSubmit>Login</ButtonSubmit>
-        
     </>
   )
 }

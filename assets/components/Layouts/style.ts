@@ -45,10 +45,10 @@ export const Section = styled.section`
     position: static;
     width: 100%;
     height: 150vh;
+    overflow-y: auto;
 `
 
 export const Menu = styled.div`
-    height: 100vh;
     h1{
         text-align: center;
     }
@@ -100,7 +100,8 @@ export const GridMainLayout = styled.div`
     margin: 0;
     padding: 0;
     color: #7559F2;
-    height: 100vh;
+    /* height: 100vh; */
+    
     display: grid;
     grid-template-columns: 280px auto;
     
