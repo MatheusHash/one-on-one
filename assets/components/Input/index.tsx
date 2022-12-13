@@ -8,7 +8,7 @@ type Props = {
     Icon: IconProp
 }
 
-function Input({Placeholder, Icon}: Props){
+export function Input({Placeholder, Icon}: Props){
     return(
         <S.Div>
             <S.Input placeholder={Placeholder}/>
@@ -19,4 +19,14 @@ function Input({Placeholder, Icon}: Props){
     )
 }
 
-export default Input;
+export function InputSearch({Placeholder, Icon}: Props){
+    return(
+        <S.ContainerSearch>
+            <S.InputSearch placeholder={Placeholder}/>
+            <S.Icon> 
+                <FontAwesomeIcon icon={Icon} size="lg"/>
+            </S.Icon>
+        </S.ContainerSearch>
+    )
+}
+
