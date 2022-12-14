@@ -5,7 +5,8 @@ import * as S from './style'
 import MenuLinks from "../../MenuLinks"
 
 import { InputSearch } from "../../Input"
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass } from "@fortawesome/pro-thin-svg-icons"
+import { faGrid2 } from "@fortawesome/pro-thin-svg-icons"
 import OneOnOne from '../../../../public/OneOnOne.svg'
 import Image from "next/image"
 
