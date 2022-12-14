@@ -5,9 +5,9 @@ import GuestLayout from '../../assets/components/Layouts/GuestLayout/GuestLayout
 
 const Home = ()=> {
   return (
-    <>
-      hello
-    </>
+    <div>
+      <h1>Titulo</h1>
+    </div>
   )
 }
 

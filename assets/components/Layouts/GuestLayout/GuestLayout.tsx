@@ -8,8 +8,8 @@ interface Props{
 const GuestLayout = ({children}: Props) =>{
     return(
         <S.GridGuestLayout>
-            <S.Space></S.Space>
-            <S.Logic></S.Logic>
+            <S.Space>a</S.Space>
+            <S.Content>{children}</S.Content>
         </S.GridGuestLayout>
     )
 }
