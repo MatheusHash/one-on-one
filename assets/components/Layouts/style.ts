@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-
-
-
 export const AddButton = styled.button`
     background-color: #59F2CD;
     color: #2A7563;
@@ -41,9 +38,7 @@ export const InputSearch = styled.input`
 
 export const Section = styled.section`
     background-color: #221030;
-    /* overflow-y: auto ; */
-    position: static;
-    width: 100%;
+    width: calc(100vw - 280px);
     height: 150vh;
     overflow-y: auto;
 `
@@ -82,16 +77,15 @@ export const Header = styled.header`
 
 
 export const BrandStyle = styled.span`
-    margin: 15px 0;
-    width: 100px;
     img{
+        margin-top: 22px;
+        padding: 5px;
         width: 100%;
         height: 40px;
         color: white;
         box-shadow: 0px 0px 15px #7559F2;
         opacity: .5;
         background-color: #7559F2;
-        padding: 5px;
         border-radius: 2.5px;
     }
 `
@@ -105,5 +99,5 @@ export const GridMainLayout = styled.div`
     display: grid;
     grid-template-columns: 280px auto;
     
-
+    overflow: hidden;
 `

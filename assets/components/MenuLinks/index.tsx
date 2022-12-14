@@ -1,25 +1,35 @@
 import React from 'react'
 import * as S from './styles'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBuilding, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import Image from 'next/image'
+import myProfilePicture from '../../../public/myProfilePicture.jpeg'
+
+
 const MenuLinks = ()=>{
     return(
         <S.Container>
             <S.Navigation>
-                <S.Button>Setor</S.Button>
-                <S.Button>one on one</S.Button>
-                <S.Button>equipes</S.Button>
-                <S.Button>empresa</S.Button>
+                <S.Button><FontAwesomeIcon icon={faBuilding} size='xl'/> Equipes</S.Button>
+                <S.Button><FontAwesomeIcon icon={faBuilding} size='xl'/> one on one</S.Button>
+                <S.Button><FontAwesomeIcon icon={faBuilding} size='xl'/> Minha Empresa</S.Button>
             </S.Navigation>
 
             <S.MenuFooter>
                 <S.User>
-                    <div></div>
-                    <S.Button>Nome do usuário</S.Button>
+                    
+                    <S.Button>
+                        <div>
+                            <Image src={myProfilePicture} alt='IMG' width='24' height='24' />
+                        </div>
+                        Nome do usuário
+                     </S.Button>
                 </S.User>
 
                 <S.Logout>
-                    <div></div>
-                    <S.Button>Nome do usuário</S.Button>
+                    
+                    <S.Button><FontAwesomeIcon icon={faDoorOpen} size='xl' /> Nome do usuário</S.Button>
                 </S.Logout>
             </S.MenuFooter>
         </S.Container>

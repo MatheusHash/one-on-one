@@ -6,6 +6,9 @@ import MenuLinks from "../MenuLinks"
 
 import { InputSearch } from "../Input"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
+import OneOnOne from '../../../public/OneOnOne.svg'
+import Image from "next/image"
+
 
 interface Props {
     children: ReactNode
@@ -17,11 +20,14 @@ interface Props {
             <S.GridMainLayout>
                 <S.Main>
                     <S.Menu>
-                        <h1>One On One</h1>
+                        <S.BrandStyle>
+                            <Image src={OneOnOne} alt="One On One" />
+                        </S.BrandStyle>
 
                         <MenuLinks/>
                     </S.Menu>
                 </S.Main>
+                
 
                 <S.Content>
                     <S.Header>

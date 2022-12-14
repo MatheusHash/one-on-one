@@ -1,3 +1,4 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -23,9 +24,19 @@ export const Button = styled.button`
     background: none;
     border: none;
     width: 100%;
-    /* height: 70px; */
     margin-block: 25px;
-    /* margin-inline: 20px ; */
+    width: 200px;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+
     ::first-letter{
         text-transform: uppercase;
     }
@@ -39,23 +50,23 @@ export const User = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    div{
-        width: 20px;
-        height: 20px;
-        background-color: #ccc;
+    gap: 15px;
+    cursor: pointer;
+    img{
+        
         border-radius: 50%;
+        object-fit: cover;
     }
-    `
+    :hover{
+        color: #7559F2;
+    }
+`
 export const Logout = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    div{
-        width: 20px;
-        height: 20px;
-        background-color: #ccc;
-        border-radius: 50%;
-    }
+    gap: 15px;
+
 `
 export const MenuFooter = styled.div`
 
