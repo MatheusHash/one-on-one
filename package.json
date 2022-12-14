@@ -9,20 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-pro": "^6.2.1",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/pro-thin-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@prisma/client": "^4.7.1",
     "@types/node": "18.11.10",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",
     "@types/styled-components": "^5.1.26",
-    "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
+    "jsonwebtoken": "^8.5.1",
     "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6",
-    "typescript": "4.9.3"
+    "typescript": "4.9.3",
+    "typescript-cookie": "^1.0.4"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.9",
+    "@typescript-eslint/eslint-plugin": "^5.46.0",
+    "@typescript-eslint/parser": "^5.46.0",
+    "eslint": "^8.29.0",
+    "eslint-plugin-react": "^7.31.11",
     "prisma": "^4.7.1"
   }
 }
