@@ -2,7 +2,7 @@ import React from 'react'
 import * as S from './styles'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faDoorOpen } from '@fortawesome/pro-thin-svg-icons'
 import Image from 'next/image'
 import myProfilePicture from '../../../public/myProfilePicture.jpeg'
 
