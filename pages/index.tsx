@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ButtonSubmit from '../assets/components/ButtonSubmit';
 import {Input} from '../assets/components/Input';
-import MainLayout from '../assets/components/Layouts/MainLayout';
+import MainLayout from '../assets/components/Layouts/Main/MainLayout';
 
 const Home = ()=> {
   return (

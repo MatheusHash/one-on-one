@@ -80,12 +80,9 @@ export const BrandStyle = styled.span`
     img{
         margin-top: 22px;
         padding: 5px;
-        width: 100%;
         height: 40px;
         color: white;
-        box-shadow: 0px 0px 15px #7559F2;
         opacity: .5;
-        background-color: #7559F2;
         border-radius: 2.5px;
     }
 `

@@ -2,11 +2,11 @@ import React from "react"
 import type { ReactNode } from "react"
 import * as S from './style'
 
-import MenuLinks from "../MenuLinks"
+import MenuLinks from "../../MenuLinks"
 
-import { InputSearch } from "../Input"
+import { InputSearch } from "../../Input"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
-import OneOnOne from '../../../public/OneOnOne.svg'
+import OneOnOne from '../../../../public/OneOnOne.svg'
 import Image from "next/image"
 
 
@@ -21,7 +21,7 @@ interface Props {
                 <S.Main>
                     <S.Menu>
                         <S.BrandStyle>
-                            <Image src={OneOnOne} alt="One On One" />
+                            <Image src={OneOnOne} alt="One On One" width='100' />
                         </S.BrandStyle>
 
                         <MenuLinks/>
