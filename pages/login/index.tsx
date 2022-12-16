@@ -12,7 +12,7 @@ export default function Login(){
 
     return(
         <>
-            <button onClick={GenerateToken()}>CRIAR JWT</button>
+            <button >CRIAR JWT</button>
         </>
     )
 
