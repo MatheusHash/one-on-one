@@ -1,16 +1,10 @@
 import jwt from 'jsonwebtoken'
-import type { Secret } from 'jsonwebtoken'
-import { ProcessEnvOptions } from 'child_process';
-// type JwtTokenSecret = {
-//     envSecret: Secret
-// }
 
-export const token = ()=>{
-    const secret: Secret = process.env?.KEY_JWT || '';
-
+export const token = (name: string)=>{
+    const secret = process.env.NEXT_PUBLIC_KEY_JWT;
+    
     if(secret){
-        const tk = jwt.sign({username: 'Matheus'}, secret)
+        const tk = jwt.sign({user: name}, secret)
         return tk;
     }
-    return '';
 }
