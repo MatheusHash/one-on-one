@@ -18,6 +18,8 @@ model users{
   password    String?
   permission  Int?
 
+  //Nota média de todas avaliações
+  notaMedia Float?
   // oneonones oneonone[]
 
   // //Cada usuário possui varias OneOnOnes
