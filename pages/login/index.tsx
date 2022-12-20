@@ -4,8 +4,6 @@ import { token } from "../../src/jwt";
 import { setCookie } from 'cookies-next';
 import { useRouter } from "next/router"; 
 
-import { getCookie } from "cookies-next";
-
 type User = {
     name: string
     password: string
@@ -14,12 +12,13 @@ type User = {
 export default function Login(){
     const router = useRouter();
 
-    const checkDataFromSubmit = (user: User)=>{
+    const checkDataFromSubmit = async (user: User)=>{
         
         const {name, password}: User = user;
 
         if(name == 'Matheus' && password == '123456'){
-            const newToken = GenerateToken(name);
+            const newToken = await GenerateToken(name);
+            console.log('NOVO TOKEN: ', newToken);
             setCookie('userLogged', newToken);
             return true;
             // router.push('/dashboard');
@@ -27,14 +26,14 @@ export default function Login(){
 
         return false;
     }
-    const GenerateToken = (name: string)=>{
+    const GenerateToken = async (name: string)=>{
         
         return token(name);
     }
 
-    const makeLogin = (user: User)=>{
+    const makeLogin = async (user: User)=>{
         
-        if(checkDataFromSubmit(user)){
+        if(await checkDataFromSubmit(user)){
             router.push('/dashboard');
         }else{
             console.log('ERRO AO LOGIN')
@@ -42,13 +41,6 @@ export default function Login(){
         
     }
 
-    const verifyIfCookieExists = async ()=> {
-        const cookieExists =  getCookie('userLogged');
-        if(cookieExists){
-            router.push('/dashboard')
-        }
-    }
-    verifyIfCookieExists();
 
     return(
         <>

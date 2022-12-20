@@ -1,29 +1,27 @@
 // middleware.ts
-
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { isValid } from './src/jwt/isValidToken';
 
+export async function middleware(request: NextRequest) {
+  const cookie = request.cookies.get('userLogged')?.value ?? '';
+  // console.log('COOKIE: ',cookie, '\n',typeof cookie);
 
-export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  if (pathname.startsWith("/_next")) return NextResponse.next();
 
-    // console.log("GETCOOKIE",getCookie('userLogged'));
-    console.log(request.cookies.get('userLogged'));
-    const cookie = request.cookies.get('userLogged');
+  const authPages = ['/login','/register'];
+  // console.log('pathname',pathname.toString());
+  
+  if(!request.cookies.has('userLogged') && authPages.includes(pathname))
+  {
+    request.nextUrl.pathname = pathname;
+    return NextResponse.rewrite(request.nextUrl);
 
-    
-    const pathname = request.url;
-    
-    console.log('PathName',pathname);
+  }else
+   if(request.cookies.has('userLogged') && await isValid(cookie) && !authPages.includes(pathname)){
+     return NextResponse.next();
+  }
 
-    const authPages = ['/login','/register'];
-    
-    if(cookie || authPages.includes(pathname)){
-        return NextResponse.next();
-    }
-    
-    if (!authPages.includes(pathname)) {
-        console.log(cookie)        
-    }
-
-    // return NextResponse.redirect(new URL('/login', request.url));
 }
