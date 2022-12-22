@@ -6,7 +6,6 @@ import { isValid } from './src/jwt/isValidToken';
 export async function middleware(request: NextRequest) {
   const cookie = request.cookies.get('userLogged')?.value ?? '';
   // console.log('COOKIE: ',cookie, '\n',typeof cookie);
-
   const { pathname } = request.nextUrl;
   
   if (pathname.startsWith("/_next")) return NextResponse.next();
@@ -14,14 +13,25 @@ export async function middleware(request: NextRequest) {
   const authPages = ['/login','/register'];
   // console.log('pathname',pathname.toString());
   
-  if(!request.cookies.has('userLogged') && authPages.includes(pathname))
+  if(!request.cookies.has('userLogged'))
   {
-    request.nextUrl.pathname = pathname;
-    return NextResponse.rewrite(request.nextUrl);
-
-  }else
-   if(request.cookies.has('userLogged') && await isValid(cookie) && !authPages.includes(pathname)){
-     return NextResponse.next();
+    if(authPages.includes(pathname)){
+      console.log('primeiro if: ', request.url)
+      request.nextUrl.pathname = pathname;
+      return NextResponse.rewrite(request.nextUrl)
+      // return NextResponse.redirect(new URL(pathname, request.url))
+    }else{
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
   }
-
+  
+  if(await isValid(cookie) && request.cookies.has('userLogged') ){
+    if(!authPages.includes(pathname)){
+      return NextResponse.next();
+    }else{
+      console.log('Redireciona para a dashboard', request.url)
+      // request.nextUrl.pathname ='/dashboard';
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
+  }
 }
