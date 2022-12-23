@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   // console.log('COOKIE: ',cookie, '\n',typeof cookie);
   const { pathname } = request.nextUrl;
   
-  if (pathname.startsWith("/_next")) return NextResponse.next();
+  if (pathname.startsWith("/_next") || pathname.startsWith('/api')) return NextResponse.next();
 
   const authPages = ['/login','/register'];
   // console.log('pathname',pathname.toString());

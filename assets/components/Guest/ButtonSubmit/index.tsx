@@ -6,12 +6,12 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 interface Props{
     children: string
     Icon: IconProp
-    Submit: MouseEvent
+    Submit: (e:HTMLButtonElement | MouseEvent | any) => void
 }
 
 export default function ButtonSubmit({children, Icon, Submit}: Props){
     return(
-        <Button onClick={ (e)=>  Submit(e)}>
+        <Button onClick={(e)=>  Submit(e)}>
             <ContentButton>
                 {children}
                 <FontAwesomeIcon icon={Icon}/>

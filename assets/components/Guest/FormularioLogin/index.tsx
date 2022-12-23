@@ -4,9 +4,11 @@ import { Input } from "../Input"
 import ButtonSubmit from "../ButtonSubmit"
 import * as S from './style'
 import Link from "next/link"
+
 export default function FormularioLogin(){
 
-    function submitForm(){
+    function submitForm(e:HTMLButtonElement | MouseEvent | any){
+        e.preventDefault();
         console.log('Hello');
     }
 

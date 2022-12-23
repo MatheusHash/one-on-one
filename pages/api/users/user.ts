@@ -1,39 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { users } from "@prisma/client";
 type Data = {
   user?: object;
   UserCreated?: object;
   message?: string;
-};
-type Company = {
-  name: string;
-  email?: string;
-  cnpj?: string;
-  users?: Array<User>;
-};
-
-type User = {
-  name: string;
-  email?: string;
-  password?: string;
-  permission?: number;
-  notaMedia?: number;
-  company_id?: string;
-  company: Company;
-};
-
-type CreateUser = {
-  main: User;
-  collaborators: Array<users>;
-};
-
-type Collaborator = {
-  name: string;
-  email: string;
-  password?: string;
-  company_id: string;
+  mensagem?: string;
+  colaboradores?: string | object | any
+  users?: Array<users>
 };
 
 // TO DO
@@ -41,60 +16,71 @@ type Collaborator = {
  * Criar uma função para verificar se o email do usuario já esta cadastrado
  */
 
-async function CreateUser(users: CreateUser) {
-  console.log(users);
+async function criarUsuario(usuario: users, company: object | any) {
   const prisma = new PrismaClient();
-  prisma.$connect();
+  const { name, email, tel, password, company_id }: string | null | any = usuario;
 
-  // users.users == Usuarios somente com email {Colaboradores}
-  const userMain = users.main;
-  
-  
-  const user = await prisma.users.create({
-    data: {
-      email: userMain.email,
-      name: userMain.name,
-      password: userMain.password,
-      permission: userMain.permission,
-      company: {
-        create: {
-          name: userMain.company.name,
-        },
+  const hash: string = (await bcrypt.hash(password, 4)) + "1on1";
+  if (company) {
+    const user: users | null = await prisma.users.create({
+      data: {
+        name,
+        email,
+        password: hash,
+        tel,
+        company: { create: { name: company.name } },
       },
-    },
-    include: {company: true}
-  });
-  console.log("Usuario criado",user);
+    });
+    if (!user) return { mensagem: "Falha ao criar usuário principal!" };
+    return { user, mensagem: `Sucesso ao cadastrar ${user}` };
+  } else {
+    const user: users | null = await prisma.users.create({
+      data: {
+        name,
+        email,
+        password: hash,
+        tel,
+        company_id,
+      },
+    });
+    if (!user) return { mensagem: "Falha ao criar usuário principal!" };
+    return { user, mensagem: `Sucesso ao cadastrar ${user}` };
+  }
+}
 
-  // const basePasswordBcrypt = "pwd"; // Constante para utilizar no Salt da função hash de geracao de senha
-  // userMain.password = await bcrypt.hash(basePasswordBcrypt, 4);
+async function criarUsuariosCollaboradores(
+  collaborators: Array<users>,
+  id_company: string
+) {
+  const prisma = new PrismaClient();
 
-  // const UserCreated = await prisma.users.create({ data: userMain });
+  let pass;
+  for (let index = 0; index < collaborators.length; index++) {
+    pass = await bcrypt.hash("oneonone", 4);
 
-  // const collaborators: Array<Collaborator> = users?.collaborators ?? [];
-  // if (collaborators.length) {
-  //   // const companyId = UserCreated.company_id;
+    for (let index = 0; index < collaborators.length; index++) {
+      collaborators[index].name =
+        collaborators[index]?.email ?? "Nome do Usuario";
+      collaborators[index].password = pass;
+      collaborators[index].company_id = id_company;
+    }
+  }
 
-  //   let pass; // => Senha que será gerada com o bcrypt para cada usuario
+  const users = await prisma.users.createMany({ data: collaborators });
+  if (users) return { message: `Sucesso ao convidar ${users.count} colegas!` };
+  return { message: `Falha ao convidar colegas!` };
+}
 
-  //   for (let index = 0; index < collaborators.length; index++) {
-  //     pass = (await bcrypt.hash(basePasswordBcrypt, 4)) + "oneonone";
-  //     if (!collaborators[index].name)
-  //       collaborators[index].name = collaborators[index].email;
-  //     collaborators[index].password = pass;
-  //   }
+async function editUserField(field:object | any, id_user: string) {
+  
+  const prisma = new PrismaClient();
+  const updatedField = prisma.users.update({where:{ id: id_user}, data:{ field, }})
+}
 
-  //   const newCollaborators = await prisma.users.createMany({
-  //     data: collaborators,
-  //   });
-
-  //   return {
-  //     UserCreated,
-  //     message: `${newCollaborators.count} colegas cadastrados com sucesso!`,
-  //   };
-  // }
-
-  return { user };
+async function getAllUsers() {
+  const prisma = new PrismaClient();
+  const users = await prisma.users.findMany();
+  return users;
 }
 
 export default async function handler(
@@ -103,17 +89,44 @@ export default async function handler(
 ) {
   switch (request.method) {
     case "POST": {
-      console.log("Metodo POST");
-      // recebendo os usuarios da requisicao
-      const usuarios: CreateUser = request.body;
-      console.log("Dados da requisicao:\n", usuarios);
+      console.log(request.body);
+      // recebendo um usuario principal e um array de usuarios collaboradores no body da requisicao
+      const {
+        mainUser,
+        collaborators,
+        company,
+      }: users | Array<users> | null | any = request.body;
+      console.log("Dados da requisicao:\n", mainUser);
+      console.log("Dados da requisicao:\n", collaborators);
 
-      const { user  } = await CreateUser(usuarios);
+      const { user, mensagem } = await criarUsuario(mainUser, company);
 
-      return response.status(200).json({ user });
+      if (collaborators?.length > 0 && user) {
+        const colaboradores: any  = await criarUsuariosCollaboradores(
+          collaborators,
+          user.company_id
+        );
+        return response.status(200).json({ colaboradores });
+      }
+      console.log(mensagem);
+
+      return response.status(200).json({ user, mensagem });
     }
+    case "PUT":{
+      const {userField, id_user } = request.body
+      if(userField){
+        await editUserField(userField, id_user);
+        response.status(200).json({ message: `Sucesso ao atualizar o campo ${userField}` });
+      }
+      break;
+    }
+    case "GET":{
+      const users = await getAllUsers(); 
+      return response.status(200).json({ users });
+    }
+
   }
 
   // resposta caso nenhum metodo preparado tenha sido utilizado
-  response.status(400).json({ message: "Not Found" });
+  return response.status(400).json({ message: "Not Found" });
 }
