@@ -1,7 +1,7 @@
 import * as jose from "jose";
 
 export const isValid = async (cookie: string) => {
-  console.log("\n verifying : ", cookie);
+  // console.log("\n verifying : ", cookie);
 
   /**
    * Constante secret e a variavel utilizada para assinar o token jwt
@@ -10,7 +10,7 @@ export const isValid = async (cookie: string) => {
     process.env.NEXT_PUBLIC_KEY_JWT
   );
   
-  /**
+  /**code 
    * A constante jwt recebe o cookie pelo middleware
    */
   const jwt = cookie;
@@ -22,7 +22,7 @@ export const isValid = async (cookie: string) => {
    */
   const { payload } = await jose.jwtVerify(jwt, secret);
   
-  console.log('PAYLOAD',payload);
+  // console.log('PAYLOAD',payload);
   
   return payload;
 };
