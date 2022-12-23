@@ -17,28 +17,28 @@ model users{
   email       String?  @unique
   password    String?
   permission  Int?
-
   //Nota média de todas avaliações
   notaMedia Float?
+
+  //Cada usuário pertencea a uma empresa
+  company_id   String? @db.ObjectId
+  company company? @relation(fields: [company_id], references: [id])
+
+  teste String?
   // oneonones oneonone[]
 
   // //Cada usuário possui varias OneOnOnes
   // oneonones_IDs String[] @db.ObjectId
   // oneonone oneonone[] @relation(fields: [oneonones_IDs], references: [id])
 
-  oneononesManager oneonone[] @relation("Manager")
-  oneononesCollaborator oneonone[] @relation("Collaborator")
+  // oneononesManager oneonone[] @relation("Manager")
+  // oneononesCollaborator oneonone[] @relation("Collaborator")
 
+  // //Cada usuário pertence a uma empresa
+  // equipe_id String?
+  // equipe teams? @relation(fields: [equipe_id], references: [id])
 
-  //Cada usuário pertencea a uma empresa
-  companyId   String
-  company company @relation(fields: [companyId], references: [id])
-
-  //Cada usuário pertence a uma empresa
-  equipe_id String
-  equipe teams @relation(fields: [equipe_id], references: [id])
-
-  actions action[]
+  // actions action[]
 
 }
 
@@ -48,78 +48,78 @@ model company{
   name  String
   cnpj String?
 
-  //Cada empresa possui N usuários
+//   //Cada empresa possui N usuários
   users users[]
 
-  //A empresa irá possuir vários OneOnOne's
-  oneonones oneonone[]
+//   //A empresa irá possuir vários OneOnOne's
+//   oneonones oneonone[]
   
-  //A empresa irá possuir várias teams
-  teams teams[]
+//   //A empresa irá possuir várias teams
+//   teams teams[]
 
 }
 
-model oneonone{
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name  String?
+// model oneonone{
+//   id          String  @id @default(auto()) @map("_id") @db.ObjectId
+//   name  String?
 
-  manager_id String
-  manager users @relation("Manager", fields: [manager_id], references: [id])
+//   manager_id String
+//   manager users @relation("Manager", fields: [manager_id], references: [id])
   
-  collaborator_id String
-  collaborator users @relation( "Collaborator", fields: [collaborator_id], references: [id])
+//   collaborator_id String
+//   collaborator users @relation( "Collaborator", fields: [collaborator_id], references: [id])
 
-  //Cada OneOnOne pertence a uma equipe
-  team_id String
-  team teams @relation(fields: [team_id], references: [id])
+//   //Cada OneOnOne pertence a uma equipe
+//   team_id String
+//   team teams @relation(fields: [team_id], references: [id])
   
  
-  //Cada OneOnOne pertence a 2 usuários [ 1 gestor e 1 usuário ]
-  // users_IDs String[] @db.ObjectId
-  // users users[] @relation(fields: [users_IDs], references: [id])
+//   //Cada OneOnOne pertence a 2 usuários [ 1 gestor e 1 usuário ]
+//   // users_IDs String[] @db.ObjectId
+//   // users users[] @relation(fields: [users_IDs], references: [id])
   
 
-  //Cada OneOnOne irá pertencer a uma empresa
-  company_id String
-  company company @relation(fields: [company_id], references: [id])
+//   //Cada OneOnOne irá pertencer a uma empresa
+//   company_id String
+//   company company @relation(fields: [company_id], references: [id])
 
-  //Cada OneOnOne possuí uma ou mais ações
-  actions action[]
+//   //Cada OneOnOne possuí uma ou mais ações
+//   actions action[]
 
-}
+// }
 
-model teams{
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+// model teams{
+//   id          String  @id @default(auto()) @map("_id") @db.ObjectId
+//   name String
 
-  //Cada equipe irá possuir vários usuários
-  users users[]
+//   //Cada equipe irá possuir vários usuários
+//   users users[]
 
-  //Cada equipe irá possuir várias OneOnOne's
-  oneonones oneonone[]
+//   //Cada equipe irá possuir várias OneOnOne's
+//   oneonones oneonone[]
 
-  //Cada equipe irá pertencer a uma empresa
-  company_id String
-  company company @relation(fields: [company_id], references: [id])
+//   //Cada equipe irá pertencer a uma empresa
+//   company_id String
+//   company company @relation(fields: [company_id], references: [id])
 
-}
+// }
 
-model action{
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  title String
+// model action{
+//   id          String  @id @default(auto()) @map("_id") @db.ObjectId
+//   title String
 
-  //Data para o ( prazo de conclusão )
-  deadline_date DateTime
+//   //Data para o ( prazo de conclusão )
+//   deadline_date DateTime
 
-  completion_date DateTime
+//   completion_date DateTime
 
 
-  //Cada action irá pertencer a uma company
-  oneonone_id String
-  oneonone oneonone @relation(fields: [oneonone_id], references: [id])
+//   //Cada action irá pertencer a uma company
+//   oneonone_id String
+//   oneonone oneonone @relation(fields: [oneonone_id], references: [id])
   
-  //Cada action irá pertencer a um usuário
-  user_id String
-  user users @relation(fields: [user_id], references: [id])
+//   //Cada action irá pertencer a um usuário
+//   user_id String
+//   user users @relation(fields: [user_id], references: [id])
 
-}
+// }

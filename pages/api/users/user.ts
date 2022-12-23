@@ -1,11 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-
+import { users } from "@prisma/client";
 type Data = {
   user?: object;
   UserCreated?: object;
   message?: string;
+};
+type Company = {
+  name: string;
+  email?: string;
+  cnpj?: string;
+  users?: Array<User>;
 };
 
 type User = {
@@ -15,11 +21,12 @@ type User = {
   permission?: number;
   notaMedia?: number;
   company_id?: string;
+  company: Company;
 };
 
 type CreateUser = {
   main: User;
-  collaborators: [];
+  collaborators: Array<users>;
 };
 
 type Collaborator = {
@@ -29,6 +36,11 @@ type Collaborator = {
   company_id: string;
 };
 
+// TO DO
+/**
+ * Criar uma função para verificar se o email do usuario já esta cadastrado
+ */
+
 async function CreateUser(users: CreateUser) {
   console.log(users);
   const prisma = new PrismaClient();
@@ -36,35 +48,53 @@ async function CreateUser(users: CreateUser) {
 
   // users.users == Usuarios somente com email {Colaboradores}
   const userMain = users.main;
+  
+  
+  const user = await prisma.users.create({
+    data: {
+      email: userMain.email,
+      name: userMain.name,
+      password: userMain.password,
+      permission: userMain.permission,
+      company: {
+        create: {
+          name: userMain.company.name,
+        },
+      },
+    },
+    include: {company: true}
+  });
+  console.log("Usuario criado",user);
 
-  const basePasswordBcrypt = "pwd"; // Constante para utilizar no Salt da função hash de geracao de senha
-  userMain.password = await bcrypt.hash(basePasswordBcrypt, 4);
+  // const basePasswordBcrypt = "pwd"; // Constante para utilizar no Salt da função hash de geracao de senha
+  // userMain.password = await bcrypt.hash(basePasswordBcrypt, 4);
 
-  const UserCreated = await prisma.users.create({ data: userMain });
+  // const UserCreated = await prisma.users.create({ data: userMain });
 
-  console.log("Usuario principal cadastrado: > \n", UserCreated);
+  // const collaborators: Array<Collaborator> = users?.collaborators ?? [];
+  // if (collaborators.length) {
+  //   // const companyId = UserCreated.company_id;
 
-  const collaborators: Array<Collaborator> = users?.collaborators ?? [];
-  if (collaborators.length) {
-    // const companyId = UserCreated.company_id;
+  //   let pass; // => Senha que será gerada com o bcrypt para cada usuario
 
-    let pass; // => Senha que será gerada com o bcrypt para cada usuario
+  //   for (let index = 0; index < collaborators.length; index++) {
+  //     pass = (await bcrypt.hash(basePasswordBcrypt, 4)) + "oneonone";
+  //     if (!collaborators[index].name)
+  //       collaborators[index].name = collaborators[index].email;
+  //     collaborators[index].password = pass;
+  //   }
 
-    for (let index = 0; index < collaborators.length; index++) {
-      pass = (await bcrypt.hash(basePasswordBcrypt, 4)) + "oneonone";
-      if (!collaborators[index].name)
-        collaborators[index].name = collaborators[index].email;
-      collaborators[index].password = pass;
-    }
+  //   const newCollaborators = await prisma.users.createMany({
+  //     data: collaborators,
+  //   });
 
-    const newCollaborators = await prisma.users.createMany({
-      data: collaborators,
-    });
+  //   return {
+  //     UserCreated,
+  //     message: `${newCollaborators.count} colegas cadastrados com sucesso!`,
+  //   };
+  // }
 
-    return { UserCreated, message: `${newCollaborators.count} colegas cadastrados com sucesso!` };
-  }
-
-  return { UserCreated };
+  return { user };
 }
 
 export default async function handler(
@@ -75,12 +105,12 @@ export default async function handler(
     case "POST": {
       console.log("Metodo POST");
       // recebendo os usuarios da requisicao
-      const usuarios = request.body;
+      const usuarios: CreateUser = request.body;
       console.log("Dados da requisicao:\n", usuarios);
-      
-      const {UserCreated, message} = await CreateUser(usuarios);
 
-      return response.status(200).json({ UserCreated, message });
+      const { user  } = await CreateUser(usuarios);
+
+      return response.status(200).json({ user });
     }
   }
 

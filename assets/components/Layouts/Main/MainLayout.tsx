@@ -1,49 +1,52 @@
-import React from "react"
-import type { ReactNode } from "react"
-import * as S from './style'
+import React from "react";
+import type { ReactNode } from "react";
+import * as S from "./style";
 
-import MenuLinks from "../../MenuLinks"
+import MenuLinks from "../../MenuLinks";
 
-import { InputSearch } from "../../Input"
-import { faMagnifyingGlass } from "@fortawesome/pro-thin-svg-icons"
-import { faGrid2 } from "@fortawesome/pro-thin-svg-icons"
-import OneOnOne from '../../../../public/OneOnOne.svg'
-import Image from "next/image"
-
+import { InputSearch } from "../../Input";
+import { faMagnifyingGlass, faPlus } from "@fortawesome/pro-thin-svg-icons";
+import OneOnOne from "../../../../public/OneOnOne.svg";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
-    children: ReactNode
+  children: ReactNode;
 }
 
- const MainLayout = ({children}: Props) =>{
+const MainLayout = ({ children }: Props) => {
+  return (
+    <S.GridMainLayout>
+      <S.Main>
+        <S.Menu>
+          <S.BrandStyle>
+            <Image src={OneOnOne} alt="One On One" />
+          </S.BrandStyle>
 
-    return(
-            <S.GridMainLayout>
-                <S.Main>
-                    <S.Menu>
-                        <S.BrandStyle>
-                            <Image src={OneOnOne} alt="One On One" width='100' />
-                        </S.BrandStyle>
+          <MenuLinks />
+        </S.Menu>
+      </S.Main>
 
-                        <MenuLinks/>
-                    </S.Menu>
-                </S.Main>
-                
+      <S.Content>
+        <S.Header>
+          {/* <S.InputSearch placeholder="Pesquisar 1on1 ou Pessoa" type="text" /> */}
+          <InputSearch
+            Placeholder="Pesquisar 1on1 ou Pessoa"
+            Icon={faMagnifyingGlass}
+          />
+          <S.AddButton>
+            ADICIONAR <span>1ON1</span> <FontAwesomeIcon icon={faPlus} />
+          </S.AddButton>
+        </S.Header>
 
-                <S.Content>
-                    <S.Header>
-                            {/* <S.InputSearch placeholder="Pesquisar 1on1 ou Pessoa" type="text" /> */}
-                            <InputSearch Placeholder="Pesquisar 1on1 ou Pessoa" Icon={faMagnifyingGlass} />
-                            <S.AddButton>Adicionar 1on1 +</S.AddButton>
-                    </S.Header>
+        <S.Section>
+          <S.DivContent>
+            {children}
+          </S.DivContent>
+          </S.Section>
+      </S.Content>
+    </S.GridMainLayout>
+  );
+};
 
-                    <S.Section>{children}</S.Section>
-
-                </S.Content>
-
-            </S.GridMainLayout>
-    )
-}
-
-export default MainLayout
-
+export default MainLayout;

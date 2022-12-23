@@ -1,4 +1,4 @@
-const settingsCss = {
+const theme = {
 
     colorPrimary : '#202020',
     colorSecond : '#282828',
@@ -8,10 +8,12 @@ const settingsCss = {
     colorThird: '#181818',
     green : '#25F9A0',
     greenHover : '#06ff97',
-    colorTextBlack : '#181818',
+    colorTextBlack : '#7a7a7a',
     colorTextLinkHover : ' #c1b5f6',
-   // font100: "'Jost' , sans-serif",
-
+    colorAddButton: '#181818',
+    InputLoginBackground: '#181818',
+    InputLoginColor: '#7559F2',
+    InputBorder: '#282828',
 
 }
-export default settingsCss
+export default theme

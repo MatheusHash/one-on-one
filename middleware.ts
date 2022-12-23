@@ -16,7 +16,6 @@ export async function middleware(request: NextRequest) {
   if(!request.cookies.has('userLogged'))
   {
     if(authPages.includes(pathname)){
-      console.log('primeiro if: ', request.url)
       request.nextUrl.pathname = pathname;
       return NextResponse.rewrite(request.nextUrl)
       // return NextResponse.redirect(new URL(pathname, request.url))
