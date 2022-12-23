@@ -7,12 +7,14 @@ type Props = {
     Placeholder: string
     Icon: IconProp
     Type: string
+    HandleChange: KeyboardEvent | any
+    Id: string 
 }
 
-export function Input({Placeholder, Icon, Type}: Props){
+export function Input({Placeholder, Icon, Type,Id, HandleChange }: Props){
     return(
         <S.Div>
-            <S.Input type={Type} placeholder={Placeholder}/>
+            <S.Input id={Id} onChange={(e)=>HandleChange(e)} type={Type} placeholder={Placeholder}/>
             <S.Icon> 
                 <FontAwesomeIcon icon={Icon} size="lg"/>
             </S.Icon>

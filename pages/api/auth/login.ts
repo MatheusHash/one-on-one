@@ -1,33 +1,40 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient, users } from "@prisma/client";
 import bcrypt from "bcrypt";
+import { token } from "../../../src/jwt";
+
 type Data = {
   user?: object;
   UserCreated?: object;
   message?: string;
+  tk?: string;
 };
 type LoginData = {
     email: string
     password: string
 } 
 
+async function getToken(user: users){
+  const tokenJWT =  token(user);
+  return tokenJWT;
+}
+
 async function Login(loginData: LoginData) {
 
     const prisma = new PrismaClient();
-    const user: users | null | any  = prisma.users.findFirst({
+    const user: users | null | any  = await prisma.users.findFirst({
         where: {
             email: loginData.email
         },
-         include: {company: true,}
+         include: {company: true,actions: true, equipe: true, oneonone: true, }
         });
-
     if(!user)
-        return {message: 'Usuário ou senha inválidos!'}
-
-    const verifyPassword = bcrypt.compare(loginData.password, user.password)
-    if(!verifyPassword)
-        return {message: 'Usuário ou senha inválidos!'}
-    return { user, message: 'Sucesso ao realizar o login!' };
+      return {user: 'Usuário ou senha inválidos!'}
+        
+    // const verifyPassword = bcrypt.compare(loginData.password, user.password,)
+    // if(!verifyPassword)
+    //     return {message: 'Usuário ou senha inválidos!'}
+    return user;
 }
 
 export default async function handler(
@@ -36,14 +43,18 @@ export default async function handler(
 ) {
   switch (request.method) {
     case "POST": {
-        const {user, message}: users | null | object | any  = Login(request.body);
-        if(user)
-          return response.status(200).json({ user, message });
+      console.log(request.body)
+        const user: users | null | object | string | any  = await Login(request.body);
+        if(user){
+          console.log(user);
+          const tk = await getToken(user);
+          return response.status(200).json({user, tk});
+        }
         else 
-          return response.status(400).json({ message });
+          return response.status(400).json({ message:'USUÁRIO OU SENHA INVÁLIDA!' });
     }
   }
 
   // resposta caso nenhum metodo preparado tenha sido utilizado
-  response.status(400).json({ message: "Not Found" });
+  return response.status(400).json({ message: "Not Found" });
 }
