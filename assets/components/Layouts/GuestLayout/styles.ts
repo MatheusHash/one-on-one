@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../../../util/theme";
 
 export const GridGuestLayout = styled.div`
     display: grid;
@@ -12,12 +13,31 @@ export const GridGuestLayout = styled.div`
 export const Space = styled.div`
     display: grid;
     width: 100%;
-    background-color: #ccc;
-    `
+    background-color: ${theme.colorSecond};
+`
 export const Content = styled.div`
     width: 100%;
     display: grid;
-    background-color: purple;
+    background-color: ${theme.colorPrimary};
+    padding: 50px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+
+`
+
+export const BrandStyle = styled.span`
+margin-left: -15px;
+        
+img{
+        width: 270px ;
+        color: white;
+    }
+`
+export const Header = styled.div`
+    width: 100%;
+    display: grid;
+    background-color: ${theme.colorPrimary};
 `
 
 
