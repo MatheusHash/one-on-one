@@ -71,7 +71,7 @@ async function criarUsuariosCollaboradores(
   return { message: `Falha ao convidar colegas!` };
 }
 
-async function editUserField(field:object | any, id_user: string) {
+async function editUserField(field:string, id_user: string) {
   
   const prisma = new PrismaClient();
   const updatedField = prisma.users.update({where:{ id: id_user}, data:{ name: field, }})
