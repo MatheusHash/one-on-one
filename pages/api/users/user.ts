@@ -74,7 +74,7 @@ async function criarUsuariosCollaboradores(
 async function editUserField(field:object | any, id_user: string) {
   
   const prisma = new PrismaClient();
-  const updatedField = prisma.users.update({where:{ id: id_user}, data:{ field, }})
+  const updatedField = prisma.users.update({where:{ id: id_user}, data:{ name: field, }})
 }
 
 async function getAllUsers() {
