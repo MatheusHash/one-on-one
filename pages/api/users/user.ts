@@ -71,11 +71,11 @@ async function criarUsuariosCollaboradores(
   return { message: `Falha ao convidar colegas!` };
 }
 
-async function editUserField(field:string, id_user: string) {
+// async function editUserField(field:string, id_user: string) {
   
-  const prisma = new PrismaClient();
-  const updatedField = prisma.users.update({where:{ id: id_user}, data:{ name: field, }})
-}
+//   const prisma = new PrismaClient();
+//   const updatedField = prisma.users.update({where:{ id: id_user}, data:{ name: field, }})
+// }
 
 async function getAllUsers() {
   const prisma = new PrismaClient();
@@ -115,7 +115,7 @@ export default async function handler(
     case "PUT":{
       const {userField, id_user } = request.body
       if(userField){
-        await editUserField(userField, id_user);
+        // await editUserField(userField, id_user);
         response.status(200).json({ message: `Sucesso ao atualizar o campo ${userField}` });
       }
       break;
