@@ -5,8 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
 import myProfilePicture from "../../../public/myProfilePicture.jpeg";
+import axios from "axios";
 
 const MenuLinks = () => {
+
+  const logout = async ()=>{
+    await axios.post('/api/auth/logout');
+  }
+
   return (
     <S.Container>
       <S.Navigation>
@@ -35,7 +41,7 @@ const MenuLinks = () => {
           </S.Button>
         </S.User>
 
-        <S.Button>
+        <S.Button onClick={()=> logout()}>
           <FontAwesomeIcon icon={faDoorOpen} size="xl" /> Sair do Gestor 1ON1
         </S.Button>
       </S.MenuFooter>
