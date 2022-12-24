@@ -26,7 +26,7 @@ async function Login(loginData: LoginData) {
         where: {
             email: loginData.email
         },
-         include: {company: true,actions: true, equipe: true, oneonone: true, }
+        //  include: {company: true,actions: true, equipe: true, oneonone: true, }
         });
     if(!user)
       return {user: 'Usuário ou senha inválidos!'}
