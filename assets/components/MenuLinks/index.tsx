@@ -7,11 +7,16 @@ import Image from "next/image";
 import myProfilePicture from "../../../public/myProfilePicture.jpeg";
 import axios from "axios";
 
-const MenuLinks = () => {
+import { useRouter } from "next/router";
+import { deleteCookie } from "cookies-next";
 
-  const logout = async ()=>{
-    await axios.post('/api/auth/logout');
-  }
+const MenuLinks = () => {
+  const router = useRouter();
+
+  const logout = async () => {
+    deleteCookie("userLogged");
+    router.push("/login");
+  };
 
   return (
     <S.Container>
@@ -33,7 +38,11 @@ const MenuLinks = () => {
         </S.Button>
 
         <S.User>
-          <S.Button>
+          <S.Button
+            onClick={() => {
+              router.push("/users/profile");
+            }}
+          >
             <div>
               <Image src={myProfilePicture} alt="IMG" width="24" height="24" />
             </div>
@@ -41,7 +50,7 @@ const MenuLinks = () => {
           </S.Button>
         </S.User>
 
-        <S.Button onClick={()=> logout()}>
+        <S.Button onClick={() => logout()}>
           <FontAwesomeIcon icon={faDoorOpen} size="xl" /> Sair do Gestor 1ON1
         </S.Button>
       </S.MenuFooter>

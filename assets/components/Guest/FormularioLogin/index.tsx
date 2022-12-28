@@ -42,8 +42,8 @@ export default function FormularioLogin() {
   }
 
   return (
-    <>
-      <form method="POST">
+    <S.Content>
+      <S.Form method="POST">
         <Input
           HandleChange={handleChange}
           Id="email"
@@ -64,11 +64,11 @@ export default function FormularioLogin() {
         <S.TextForm>
           Não tem uma conta? <Link href="/register">CADASTRE-SE AQUI</Link>
         </S.TextForm>
-      </form>
+      </S.Form>
 
       <S.TextForm>
         <Link href="/recuperarSenha">PRECISO DE UMA NOVA SENHA</Link>
       </S.TextForm>
-    </>
+    </S.Content>
   );
 }

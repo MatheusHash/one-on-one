@@ -1,37 +1,20 @@
 import React, { ReactNode } from "react";
-import { token } from "../../src/jwt";
 import GuestLayout from "../../assets/components/Layouts/GuestLayout/GuestLayout";
-import { setCookie } from 'cookies-next';
-import { useRouter } from "next/router"; 
-
-import { Input } from "../../assets/components/Guest/Input";
 import FormularioLogin from "../../assets/components/Guest/FormularioLogin";
-import { users } from "@prisma/client";
 
-type User = {
-    name: string
-    password: string
+// exportando as constantes dos textos e titulos do Header do Layout de Convidado
+export const title = "Realize seu Login";
+export const text = "Sua alta performance te aguarda no lado da produtividade";
+export default function Login() {
+  return (
+    <FormularioLogin />
+  );
 }
-
-export default function Login(){
-    const router = useRouter();
-
-    
-    const GenerateToken = async (user: users)=>{
-        
-        return token(user);
-    }
-    return(
-        <>
-            <FormularioLogin />
-        </>
-    )
-
-}
-
 
 Login.getLayout = function getLayout(page: ReactNode) {
-    return (
-        <GuestLayout>{page}</GuestLayout>
-    )
-  }
+  return (
+    <GuestLayout title={title} text={text}>
+      {page}
+    </GuestLayout>
+  );
+};

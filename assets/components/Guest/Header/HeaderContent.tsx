@@ -1,10 +1,16 @@
-import React from 'react'
-import * as S from './styles'
-export default function HeaderContent(){
-    return(
-        <S.Content>
-            <h1>Realize seu login</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, delectus.</p>
-        </S.Content>
-    )
+import React from "react";
+import * as S from "./styles";
+
+type Props = {
+  Title: string;
+  Text: string;
+};
+
+export default function HeaderContent({ Title, Text }: Props) {
+  return (
+    <S.Content>
+      <h1>{Title}</h1>
+      <p>{Text}</p>
+    </S.Content>
+  );
 }

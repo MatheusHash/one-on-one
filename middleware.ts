@@ -15,20 +15,14 @@ export async function middleware(request: NextRequest) {
   
   if(!request.cookies.has('userLogged'))
   {
-    if(authPages.includes(pathname)){
+    if(authPages.includes(pathname) || pathname.startsWith('/api')){
       request.nextUrl.pathname = pathname;
       return NextResponse.rewrite(request.nextUrl)
-      // return NextResponse.redirect(new URL(pathname, request.url))
     }else{
       return NextResponse.redirect(new URL('/login', request.url))
     }
   }
 
-  console.log(request.headers);
-  if(pathname === '/api/auth/logout'){
-    console.log('quero fazer o logout');
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
   
   if(await isValid(cookie) && request.cookies.has('userLogged') ){
     if(!authPages.includes(pathname)){
@@ -36,7 +30,7 @@ export async function middleware(request: NextRequest) {
     }else{
       // console.log('Redireciona para a dashboard', request.url)
       // request.nextUrl.pathname ='/dashboard';
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
 }

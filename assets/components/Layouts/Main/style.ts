@@ -42,7 +42,7 @@ export const InputSearch = styled.input`
 `
 
 export const DivContent = styled.article`
-    background-color: ${theme.colorSecond};
+    background-color: ${theme.colorPrimary};
     border-radius: 15px;
     min-height: 80vh;
     display: grid;
@@ -51,7 +51,7 @@ export const DivContent = styled.article`
 `
 
 export const Section = styled.section`
-    background-color: ${theme.colorPrimary};
+    background-color: ${theme.colorSecond};
     width: calc(100vw - 280px);
     height: 150vh;
     overflow-y: auto;
@@ -70,7 +70,7 @@ export const Menu = styled.div`
 
 export const Main = styled.div`
     border-right: solid 1px black;
-    background-color: ${theme.colorPrimary};
+    background-color: ${theme.colorSecond};
     height: 100vh;
     
 `
@@ -87,7 +87,7 @@ export const Header = styled.header`
     align-items: center;
     padding: 20px;
     width: 100%;
-    background-color: ${theme.colorPrimary};
+    background-color: ${theme.colorSecond};
     height: 90px;
     nav{
         display: flex;

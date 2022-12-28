@@ -9,6 +9,22 @@ import { faMagnifyingGlass, faPlus } from "@fortawesome/pro-thin-svg-icons";
 import OneOnOne from "../../../../public/OneOnOne.svg";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DocumentContext } from "next/document";
+
+import { PrismaClient } from "@prisma/client";
+import { getCookie } from "cookies-next";
+function getServerSideProps(context: DocumentContext){
+
+  const cookie = getCookie('userLogged');
+  console.log("Cookie do serversideprops",cookie)
+  const prisma = new PrismaClient();
+  // const user = prisma.users.findFirst({where: })
+  return {
+    Props:{
+
+    }
+  }
+}
 
 interface Props {
   children: ReactNode;
