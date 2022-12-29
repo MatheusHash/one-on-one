@@ -14,6 +14,14 @@ const theme = {
     InputLoginBackground: '#181818',
     InputLoginColor: '#7559F2',
     InputBorder: '#282828',
+    TextNavigationProfile: '#7559F2',
+    BorderProfileColor : '#282828',
+    ImageProfileBorder: '#7559F2',
+    TitleInputProfileUser: '#E0E0E0',
+    InputColor : '#202020',
+
+
+
 
 }
 export default theme

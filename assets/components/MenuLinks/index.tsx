@@ -5,8 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
 import myProfilePicture from "../../../public/myProfilePicture.jpeg";
+import axios from "axios";
+
+import { useRouter } from "next/router";
+import { deleteCookie } from "cookies-next";
 
 const MenuLinks = () => {
+  const router = useRouter();
+
+  const logout = async () => {
+    deleteCookie("userLogged");
+    router.push("/login");
+  };
+
   return (
     <S.Container>
       <S.Navigation>
@@ -27,7 +38,11 @@ const MenuLinks = () => {
         </S.Button>
 
         <S.User>
-          <S.Button>
+          <S.Button
+            onClick={() => {
+              router.push("/users/profile");
+            }}
+          >
             <div>
               <Image src={myProfilePicture} alt="IMG" width="24" height="24" />
             </div>
@@ -35,7 +50,7 @@ const MenuLinks = () => {
           </S.Button>
         </S.User>
 
-        <S.Button>
+        <S.Button onClick={() => logout()}>
           <FontAwesomeIcon icon={faDoorOpen} size="xl" /> Sair do Gestor 1ON1
         </S.Button>
       </S.MenuFooter>

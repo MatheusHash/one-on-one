@@ -1,31 +1,21 @@
-import React, { ReactNode } from 'react';
-import GuestLayout from '../../assets/components/Layouts/GuestLayout/GuestLayout';
-import { useRouter } from "next/router"; 
+import React, { ReactNode } from "react";
+import { RegisterForm } from "../../assets/components/Guest/RegisterForm";
+import GuestLayout from "../../assets/components/Layouts/GuestLayout/GuestLayout";
 
-import { getCookie } from "cookies-next";
+// exportando as constantes dos textos e titulos do Header do Layout de Convidado
+export const title = "Crie sua conta";
+export const text = "Sua alta performance te aguarda no lado da produtividade";
 
+const Home = () => {
+  return <RegisterForm />;
+};
 
-const Home = ()=> {
-  const router = useRouter();
-  const verifyIfCookieExists = async ()=> {
-    const cookieExists =  getCookie('userLogged');
-    if(cookieExists){
-        router.push('/dashboard')
-    }
-}
-verifyIfCookieExists();
-
-  return (
-    <div>
-      <h1>Titulo</h1>
-    </div>
-  )
-}
-
-export default Home
+export default Home;
 
 Home.getLayout = function getLayout(page: ReactNode) {
   return (
-      <GuestLayout>{page}</GuestLayout>
-  )
-}
+    <GuestLayout title={title} text={text}>
+      {page}
+    </GuestLayout>
+  );
+};

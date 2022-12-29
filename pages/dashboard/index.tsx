@@ -6,7 +6,6 @@ import { getCookie } from 'cookies-next';
 const Home = ()=> {
 
     const cookie = getCookie('userLogged');
-    console.log('Cookie',cookie);
 
   return (
     <>
