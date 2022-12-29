@@ -86,21 +86,20 @@ async function getAllUsers() {
 }
 
 async function updateUserField(field, id) {
-  
+  console.log(id);
   const prisma = new PrismaClient();
   for (const key in field) {
     if (field.hasOwnProperty(key)) {
       const value = field[key];
       await prisma.users.update({
-        where: id,
+        where: {id},
         data: {
           [key] : value,
         },
       });
-      // console.log(`${key}: ${value}`);
+      console.log(`${key}: ${value}`);
     }
   }
-  
 }
 
 async function findUser(id:string){
