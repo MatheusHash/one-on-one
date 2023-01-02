@@ -14,8 +14,8 @@ const MenuLinks = () => {
   const router = useRouter();
 
   const logout = async () => {
-    deleteCookie("userLogged");
-    router.push("/login");
+    // router.push("/api/logout");
+    fetch('/api/logout');
   };
 
   return (

@@ -17,7 +17,7 @@ export const Content = styled.main`
   flex-direction: column;
 `;
 
-export const Form = styled.form`
+export const Form = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
