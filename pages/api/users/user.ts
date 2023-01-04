@@ -34,7 +34,7 @@ async function criarUsuario(usuario: users, company: object | any) {
       },
     });
     if (!user) return { mensagem: "Falha ao criar usuário principal!" };
-    return { user:user, mensagem: `Sucesso ao cadastrar ${user}` };
+    return { user: user, mensagem: `Sucesso ao cadastrar ${user}` };
   } else {
     const user: users | null = await prisma.users.create({
       data: {
@@ -96,11 +96,12 @@ async function updateUserField(field, id: string) {
   }
 }
 
-async function findUser(id: string) {
+async function findUser(id: string): Promise<users | string> {
   const prisma = new PrismaClient();
   const user = await prisma.users.findFirst({ where: { id } });
   console.log(user);
-  return user;
+  if (user) return user;
+  return 'Usuário não encontrado!'
 }
 
 export default async function handler(
@@ -127,16 +128,14 @@ export default async function handler(
         request.body;
 
       const { user, mensagem } = await criarUsuario(mainUser, company);
-      console.log('user cadastrado:\n', user);
+      console.log("user cadastrado:\n", user);
       if (team?.length > 0 && user) {
-        const colaboradores: {message: string} = await criarUsuariosCollaboradores(
-          team,
-          user.company_id
-        );
+        const colaboradores: { message: string } =
+          await criarUsuariosCollaboradores(team, user.company_id);
         return response.status(200).json({ user, colaboradores });
       }
 
-      return response.status(200).json({ user , mensagem });
+      return response.status(200).json({ user, mensagem });
     }
     case "PUT": {
       const { field } = request.body;

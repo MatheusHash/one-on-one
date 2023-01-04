@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ReactNode } from "react";
 import * as S from "./style";
 
@@ -13,24 +13,34 @@ import { DocumentContext } from "next/document";
 
 import { PrismaClient } from "@prisma/client";
 import { getCookie } from "cookies-next";
-function getServerSideProps(context: DocumentContext){
+import { isValid } from "../../../../src/jwt/isValidToken";
 
-  const cookie = getCookie('userLogged');
-  console.log("Cookie do serversideprops",cookie)
-  const prisma = new PrismaClient();
-  // const user = prisma.users.findFirst({where: })
-  return {
-    Props:{
 
-    }
-  }
-}
 
 interface Props {
   children: ReactNode;
 }
 
+import {useEffect} from 'react'
+
 const MainLayout = ({ children }: Props) => {
+
+  const [user,setUser] = useState('');
+
+  
+  useEffect(()=>{
+    async function getUserCookie() {
+      const cookie = getCookie("userLogged");
+      console.log("COOKIE LAYOUT →",cookie);
+      console.log('executando...')
+      const payload: any =   await isValid(cookie);
+      const user = payload.user;  
+      setUser(user);
+      console.log("USER LAYOUT →",user);
+      return user.name; 
+    }  
+  }, []);
+
   return (
     <S.GridMainLayout>
       <S.Main>
@@ -39,7 +49,7 @@ const MainLayout = ({ children }: Props) => {
             <Image src={OneOnOne} alt="One On One" />
           </S.BrandStyle>
 
-          <MenuLinks />
+          <MenuLinks userName={user} />
         </S.Menu>
       </S.Main>
 

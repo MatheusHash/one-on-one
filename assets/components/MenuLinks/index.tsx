@@ -5,17 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
 import myProfilePicture from "../../../public/myProfilePicture.jpeg";
-import axios from "axios";
 
 import { useRouter } from "next/router";
-import { deleteCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
+import { isValid } from "../../../src/jwt/isValidToken";
 
-const MenuLinks = () => {
+
+const MenuLinks =  (userName: string) => {
+
+  console.log('nome: ', userName)
   const router = useRouter();
-
   const logout = async () => {
     // router.push("/api/logout");
-    fetch('/api/logout');
+    fetch("/api/logout");
   };
 
   return (
@@ -33,7 +35,11 @@ const MenuLinks = () => {
       </S.Navigation>
 
       <S.MenuFooter>
-        <S.Button>
+        <S.Button
+          onClick={() => {
+            router.push("/company");
+          }}
+        >
           <FontAwesomeIcon icon={faDoorOpen} size="xl" /> Nome Empresa
         </S.Button>
 
@@ -43,10 +49,12 @@ const MenuLinks = () => {
               router.push("/users/profile");
             }}
           >
+            <>
             <div>
               <Image src={myProfilePicture} alt="IMG" width="24" height="24" />
             </div>
-            Nome do usuário
+            {`${userName.name}`}
+            </>
           </S.Button>
         </S.User>
 

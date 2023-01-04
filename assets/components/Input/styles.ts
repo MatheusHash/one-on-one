@@ -29,7 +29,7 @@ export const ContainerSearch = styled.div`
   padding: 2px;
   justify-content: space-between;
   align-items: center;
-  background-color: ${theme.colorPrimary};
+  background-color: ${theme.InputLoginBackground};
   color: ${theme.colorTextBlack};
 
   border: none;
