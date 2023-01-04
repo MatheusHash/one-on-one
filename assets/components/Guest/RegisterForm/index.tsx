@@ -32,7 +32,7 @@ export function RegisterForm() {
     name: "",
   });
 
-  function handleMainUserChange(e) {
+  function handleMainUserChange(e: any) {
     const { id, value } = e.target;
     setMainUser((prev) => ({
       ...prev,
@@ -40,7 +40,7 @@ export function RegisterForm() {
     }));
     console.log(mainUser);
   }
-  function handleCompanyChange(e) {
+  function handleCompanyChange(e: any) {
     const { id, value } = e.target;
     setCompany((prev) => ({
       ...prev,
@@ -49,7 +49,7 @@ export function RegisterForm() {
     console.log(company);
   }
 
-  function nextStep(e) {
+  function nextStep(e: any) {
     e.preventDefault();
     showTeamInputs((prev) => !prev);
     // console.log("Empresa", company, "Usuario: ", mainUser);

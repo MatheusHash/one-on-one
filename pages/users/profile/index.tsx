@@ -6,11 +6,11 @@ import { isValid } from "../../../src/jwt/isValidToken";
 import * as jose from "jose";
 import { users } from "@prisma/client";
 
-const Profile = ({user}: users) => {
+const Profile = (user: users) => {
   console.log('first data',user)
   return (
     <>
-      <UserProfile Data={{user}} />
+      <UserProfile Data={user} />
     </>
   );
 };
