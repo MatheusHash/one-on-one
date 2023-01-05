@@ -140,7 +140,7 @@ export default async function handler(
     case "PUT": {
       const { field } = request.body;
       const id = request.body.userId;
-      console.log(request.body, "\n", field);
+      // console.log(request.body, "\n", field);
       if (field) {
         await updateUserField(field, id);
         return response

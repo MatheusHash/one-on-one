@@ -25,7 +25,7 @@ async function Login(loginData: LoginData) {
     where: {
       email: loginData.email,
     },
-     include: {company: true,actions: true, equipe: true, oneonone: true, }
+    select: {profilePicture: false,id: true, name: true,company_id: true, password: true,},
   });
   if (!user) return null;
 
