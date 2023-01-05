@@ -35,13 +35,21 @@ export const UserLeftWithImage = styled.div`
 `
 export const ImageProfile = styled.div`
     width: 210px;
+    height: 210px;
     margin-top: 20px;
+
+    border: solid 6px ${theme.ImageProfileBorder};
+    border-radius: 50%;
+    input{
+        display: none;
+    }
     img{
-        border: solid 6px ${theme.ImageProfileBorder};
         object-fit: cover;
         border-radius: 50%;
+        
         width: 100%;
         height: 100%;
+        
     }
 `
 
