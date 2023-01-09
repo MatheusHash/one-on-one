@@ -6,7 +6,7 @@ export const Div = styled.div`
     justify-content: space-between;
     align-items: center;
     background-color: ${theme.InputLoginBackground};
-    width: 340px;
+    width: 100%;
     height: 45px;
     padding: 0px 10px ;
     color: ${theme.InputLoginColor};

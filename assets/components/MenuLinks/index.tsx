@@ -4,16 +4,13 @@ import * as S from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
-import myProfilePicture from "../../../public/myProfilePicture.jpeg";
-
 import { useRouter } from "next/router";
-import { getCookie } from "cookies-next";
-import { isValid } from "../../../src/jwt/isValidToken";
+import { users } from "@prisma/client";
 
 
-const MenuLinks =  (userName: string) => {
+const MenuLinks =  (user: users) => {
 
-  console.log('nome: ', userName)
+  // console.log('User no Menu Links: ', user);
   const router = useRouter();
   const logout = async () => {
     // router.push("/api/logout");
@@ -40,7 +37,7 @@ const MenuLinks =  (userName: string) => {
             router.push("/company");
           }}
         >
-          <FontAwesomeIcon icon={faDoorOpen} size="xl" /> Nome Empresa
+          <FontAwesomeIcon icon={faDoorOpen} size="xl" /> {user.userCompany}
         </S.Button>
 
         <S.User>
@@ -51,9 +48,9 @@ const MenuLinks =  (userName: string) => {
           >
             <>
             <div>
-              <Image src={myProfilePicture} alt="IMG" width="24" height="24" />
+              <Image src={ user.userPicture} alt="IMG" width="24" height="24" />
             </div>
-            {`${userName.name}`}
+            {`${user.userName}`}
             </>
           </S.Button>
         </S.User>
