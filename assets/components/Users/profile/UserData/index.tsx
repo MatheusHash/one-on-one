@@ -13,15 +13,14 @@ import {
 
 import axios from "axios";
 
-import myProfilePicture from "../../../../../public/myProfilePicture.jpeg";
 import { users } from "@prisma/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/pro-thin-svg-icons";
 
 export default function UserData({ UserData }: users) {
-  const [path, setPath] = useState<string>("");
 
   const dataUser = UserData.Data.user;
-  const [file, setFile] = useState(null);
-  const [base64code, setBase64code] = useState<string>();
+
   // console.log("ID DO USER", dataUser.id);
   const [user, setUser] = useState<users>(dataUser);
 
@@ -52,40 +51,41 @@ export default function UserData({ UserData }: users) {
 
   async function getImage(e: ChangeEvent<File | any>) {
     const { id } = e.target;
-    console.log('alterei')
-    const arquivo = await e.target.files[0];
-    console.log('files: ',e.target.files[0]);
-    getBase64(arquivo); // arquivo que peguei no input
-    setFile(URL.createObjectURL(arquivo)); // setFile é a const que utilizo na tag '<Image src ={file}/>'
-    sendUpdate(id, base64code); // enviando a string base64code, string base64 da imagem, para cadastrar no banco
+    const arquivo =  e.target.files[0];
+
+    await getBase64(id,arquivo); // arquivo que peguei no input
+
     // console.log("base64code", base64code);
   }
 
-  async function getBase64(file: File) {
+   async function getBase64(id,file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = async () => {
-      onLoad(reader.result);
+    reader.onload =  () => {
+      user.profilePicture = reader.result;
+      sendUpdate(id, reader.result); // enviando a string base64code, string base64 da imagem, para cadastrar no banco
     };
   }
-  const onLoad = (fileString: string | any) => {
-      setBase64code(fileString); // setanto a string base64code, que envio para a api
-  };
 
   return (
     <UserContent>
       <UserLeftWithImage>
         <label htmlFor="profilePicture">
           <ImageProfile>
-            <Image
-              src={file ?? user.profilePicture}
-              width="210"
-              height="210"
-              alt="inserir imagem"
-            />
+
+            {
+              user.profilePicture ?
+              <Image
+                src={user.profilePicture ?? ""}
+                width="210"
+                height="210"
+                alt="inserir imagem"
+              /> :
+              <FontAwesomeIcon icon={faUser} width={'210'} height={'210'} />
+            }
             <input
               onChange={(e) => getImage(e)}
-              value={''}
+              value={""}
               id="profilePicture"
               type="file"
               accept="image/*"
@@ -105,6 +105,7 @@ export default function UserData({ UserData }: users) {
               onChange={handleChangeInputValue}
               onBlur={handleFocusEvent}
               value={user.name}
+              placeholder={"Clique aqui para informar"}
               type={"text"}
             />
           </Data>
@@ -115,17 +116,20 @@ export default function UserData({ UserData }: users) {
               onChange={handleChangeInputValue}
               onBlur={handleFocusEvent}
               value={user.tel ?? ""}
+              placeholder={"Clique aqui para informar"}
               type={"text"}
             />
           </Data>
           <Data>
-            <h4>Perfil do Instagram</h4>
+            <h4>Nota Média</h4>
             <Input
               id={"notaMedia"}
               onChange={handleChangeInputValue}
               onBlur={handleFocusEvent}
               value={user.notaMedia ?? ""}
+              placeholder={"Clique aqui para informar"}
               type={"number"}
+              readOnly
             />
           </Data>
           <Data>
@@ -135,6 +139,7 @@ export default function UserData({ UserData }: users) {
               onChange={handleChangeInputValue}
               onBlur={handleFocusEvent}
               value={user.email ?? "Clique para digitar"}
+              placeholder={"Clique aqui para informar"}
               type={"text"}
             />
           </Data>

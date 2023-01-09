@@ -11,6 +11,13 @@ type Data = {
   users?: Array<users>;
 };
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb'
+    }
+  }
+}
 // TO DO
 /**
  * Criar uma função para verificar se o email do usuario já esta cadastrado

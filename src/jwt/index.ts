@@ -6,7 +6,7 @@ export async function token(user: users): Promise<string> {
     const iat = Math.floor(Date.now() / 1000);
     const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_KEY_JWT)
     
-    const exp = iat + 60* 60; // four hours
+    const exp = iat + 60* 60 * 10; // four hours
     
     const jwt = await new jose.SignJWT({ user })
                 .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })

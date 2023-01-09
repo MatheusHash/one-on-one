@@ -9,47 +9,77 @@ import { faMagnifyingGlass, faPlus } from "@fortawesome/pro-thin-svg-icons";
 import OneOnOne from "../../../../public/OneOnOne.svg";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DocumentContext } from "next/document";
 
-import { PrismaClient } from "@prisma/client";
 import { getCookie } from "cookies-next";
 import { isValid } from "../../../../src/jwt/isValidToken";
-
-
 
 interface Props {
   children: ReactNode;
 }
 
-import {useEffect} from 'react'
+import { useEffect } from "react";
+import axios from "axios";
+import PopUp from "../../PopUp";
 
 const MainLayout = ({ children }: Props) => {
+  const [user, setUser] = useState({});
+  const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
-  const [user,setUser] = useState('');
+  // const [userApi, setUserApi] = useState<users>();
 
-  
-  useEffect(()=>{
+  useEffect(() => {
     async function getUserCookie() {
       const cookie = getCookie("userLogged");
-      console.log("COOKIE LAYOUT →",cookie);
-      console.log('executando...')
-      const payload: any =   await isValid(cookie);
-      const user = payload.user;  
-      setUser(user);
-      console.log("USER LAYOUT →",user);
-      return user.name; 
-    }  
+      // console.log("COOKIE LAYOUT →", cookie);
+      // console.log("executando...");
+      const payload = await isValid(cookie);
+      const user = await payload.user;
+
+      console.log("USER LAYOUT →", user);
+      await axios
+        .get("/api/users/fetchUserWithPicture?id=" + user.id)
+        .then((res) => {
+          if (res.status === 200) {
+            const data = res.data;
+            // console.log("DATADATA →", res.data);
+            setUser(data);
+          }
+        })
+        .catch((err) => console.log(err));
+
+      return user;
+    }
+    console.log("verdadeiro", user);
+    getUserCookie();
   }, []);
+
+  console.log("Olha o usuario que tenho no layout", user)
 
   return (
     <S.GridMainLayout>
+      {showPopUp ? (
+        <PopUp
+        userId={user.id}
+        companyId={user.company.id}
+          setShowPopUp={() => {
+            setShowPopUp((prev) => !prev);
+            console.log("teste");
+          }}
+        />
+      ) : (
+        <></>
+      )}
       <S.Main>
         <S.Menu>
           <S.BrandStyle>
             <Image src={OneOnOne} alt="One On One" />
           </S.BrandStyle>
 
-          <MenuLinks userName={user} />
+          <MenuLinks
+            userName={user.name}
+            userPicture={user?.profilePicture || ""}
+            userCompany={user?.company?.name ?? ""}
+          />
         </S.Menu>
       </S.Main>
 
@@ -60,16 +90,18 @@ const MainLayout = ({ children }: Props) => {
             Placeholder="Pesquisar 1on1 ou Pessoa"
             Icon={faMagnifyingGlass}
           />
-          <S.AddButton>
+          <S.AddButton
+            onClick={() => {
+              setShowPopUp((prev) => !prev);
+            }}
+          >
             ADICIONAR <span>1ON1</span> <FontAwesomeIcon icon={faPlus} />
           </S.AddButton>
         </S.Header>
 
         <S.Section>
-          <S.DivContent>
-            {children}
-          </S.DivContent>
-          </S.Section>
+          <S.DivContent>{children}</S.DivContent>
+        </S.Section>
       </S.Content>
     </S.GridMainLayout>
   );

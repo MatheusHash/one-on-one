@@ -7,7 +7,7 @@ import * as jose from "jose";
 import { users } from "@prisma/client";
 
 const Profile = (user: users) => {
-  console.log('first data',user)
+  console.log("first data", user);
   return (
     <>
       <UserProfile Data={user} />
@@ -24,7 +24,6 @@ Profile.getLayout = function getLayout(page: ReactNode) {
 export async function getServerSideProps(context: {
   req: { cookies: { userLogged: string } };
 }) {
-  // console.log( 'tchee',req.req.rawHeaders)
   console.log("tchee", context.req.cookies.userLogged);
   const cookie = context.req.cookies.userLogged;
   const payload: jose.JWTPayload = await isValid(cookie);
