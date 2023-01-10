@@ -6,6 +6,7 @@ import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { users } from "@prisma/client";
+import { deleteCookie } from "cookies-next";
 
 
 const MenuLinks =  (user: users) => {
@@ -14,7 +15,8 @@ const MenuLinks =  (user: users) => {
   const router = useRouter();
   const logout = async () => {
     // router.push("/api/logout");
-    fetch("/api/logout");
+    deleteCookie('userLogged');
+    router.push('/login');
   };
 
   return (
