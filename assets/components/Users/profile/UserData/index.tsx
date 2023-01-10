@@ -16,9 +16,11 @@ import axios from "axios";
 import { users } from "@prisma/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/pro-thin-svg-icons";
+import { useGetFromStore } from "../../../../../hooks/zustandHooks";
+import { useStore } from "../../../../../src/store";
+import { EncondeData } from "../../../../../src/store/js-base64";
 
 export default function UserData({ UserData }: users) {
-
   const dataUser = UserData.Data.user;
 
   // console.log("ID DO USER", dataUser.id);
@@ -47,42 +49,53 @@ export default function UserData({ UserData }: users) {
     // console.log(e.target);
     const { id, value } = e.target;
     sendUpdate(id, value);
+    const encodeUser = EncondeData(user);
+    setUserGlobal(encodeUser);
   };
 
   async function getImage(e: ChangeEvent<File | any>) {
     const { id } = e.target;
-    const arquivo =  e.target.files[0];
+    const arquivo = e.target.files[0];
 
-    await getBase64(id,arquivo); // arquivo que peguei no input
+    await getBase64(id, arquivo); // arquivo que peguei no input
 
     // console.log("base64code", base64code);
   }
-
-   async function getBase64(id,file: File) {
+  const [userZustand, setUserGlobal, removeUserGlobal] = useStore((state) => [
+    state.user,
+    state.setUserGlobal,
+    state.removeUserGlobal,
+  ]);
+  async function getBase64(id, file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload =  () => {
+    reader.onload = () => {
       user.profilePicture = reader.result;
       sendUpdate(id, reader.result); // enviando a string base64code, string base64 da imagem, para cadastrar no banco
+      const encodeUser = EncondeData(user);
+      setUserGlobal(encodeUser);
     };
   }
+
+
+  const globalUser = useGetFromStore(useStore, (state) => state.user);
+  console.log('GLOBAL USER',globalUser);
 
   return (
     <UserContent>
       <UserLeftWithImage>
         <label htmlFor="profilePicture">
           <ImageProfile>
-
-            {
-              user.profilePicture ?
+            {user.profilePicture ? (
               <Image
-                src={user.profilePicture ?? ""}
+                src={ globalUser?.profilePicture ?? ""}
                 width="210"
                 height="210"
                 alt="inserir imagem"
-              /> :
-              <FontAwesomeIcon icon={faUser} width={'210'} height={'210'} />
-            }
+              />
+            ) : (
+              <FontAwesomeIcon icon={faUser} width={"210"} height={"210"} />
+            )}
             <input
               onChange={(e) => getImage(e)}
               value={""}
