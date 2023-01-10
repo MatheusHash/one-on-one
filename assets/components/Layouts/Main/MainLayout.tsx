@@ -21,6 +21,10 @@ import { useEffect } from "react";
 import axios from "axios";
 import PopUp from "../../PopUp";
 
+import { useStore } from "../../../../src/store";
+import { useGetFromStore } from "../../../../hooks/zustandHooks";
+import { DecodeData } from "../../../../src/store/js-base64";
+
 const MainLayout = ({ children }: Props) => {
   const [user, setUser] = useState({});
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
@@ -53,14 +57,18 @@ const MainLayout = ({ children }: Props) => {
     getUserCookie();
   }, []);
 
-  console.log("Olha o usuario que tenho no layout", user)
+  // console.log("Olha o usuario que tenho no layout", user)
+
+
+  const globalUser = useGetFromStore(useStore, (state) => state.user);
+  console.log('GLOBAL USER',globalUser);
 
   return (
     <S.GridMainLayout>
       {showPopUp ? (
         <PopUp
-        userId={user.id}
-        companyId={user.company.id}
+          userId={ globalUser?.id ?? "" }
+          companyId={ globalUser?.company_id ?? ""}
           setShowPopUp={() => {
             setShowPopUp((prev) => !prev);
             console.log("teste");
@@ -71,14 +79,15 @@ const MainLayout = ({ children }: Props) => {
       )}
       <S.Main>
         <S.Menu>
+
           <S.BrandStyle>
             <Image src={OneOnOne} alt="One On One" />
           </S.BrandStyle>
 
           <MenuLinks
-            userName={user.name}
-            userPicture={user?.profilePicture || ""}
-            userCompany={user?.company?.name ?? ""}
+            userName={ globalUser?.name ?? ""}
+            userPicture={  globalUser?.profilePicture ?? ""}
+            userCompany={  globalUser?.company.name ?? ""}
           />
         </S.Menu>
       </S.Main>

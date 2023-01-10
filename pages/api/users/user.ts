@@ -14,10 +14,10 @@ type Data = {
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '10mb'
-    }
-  }
-}
+      sizeLimit: "10mb",
+    },
+  },
+};
 // TO DO
 /**
  * Criar uma função para verificar se o email do usuario já esta cadastrado
@@ -105,10 +105,19 @@ async function updateUserField(field, id: string) {
 
 async function findUser(id: string): Promise<users | string> {
   const prisma = new PrismaClient();
-  const user = await prisma.users.findFirst({ where: { id } });
+  const user = await prisma.users.findFirst({
+    where: { id },
+    select: {
+      id: true,
+      company_id: true,
+      name: true,
+      profilePicture: true,
+      company: true,
+    },
+  });
   console.log(user);
   if (user) return user;
-  return 'Usuário não encontrado!'
+  return "Usuário não encontrado!";
 }
 
 export default async function handler(

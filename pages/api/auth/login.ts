@@ -15,7 +15,8 @@ type LoginData = {
 };
 
 async function getToken(user: users) {
-  const tokenJWT = token(user);
+  const { company_id, id, name } = user;
+  const tokenJWT = token({ company_id, id, name });
   return tokenJWT;
 }
 
@@ -25,7 +26,7 @@ async function Login(loginData: LoginData) {
     where: {
       email: loginData.email,
     },
-    select: {profilePicture: false,id: true, name: true,company_id: true, password: true,},
+    select: {profilePicture: true,id: true, name: true,company_id: true, password: true, company: true,},
   });
   if (!user) return null;
 
@@ -53,7 +54,7 @@ export default async function handler(
       );
 
       if (user) {
-        console.log(user);
+        console.log("Login user\n",user);
         const tk = await getToken(user);
         return response.status(200).json({ user, tk });
       } else
