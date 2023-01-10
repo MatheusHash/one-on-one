@@ -7,14 +7,20 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { users } from "@prisma/client";
 import { deleteCookie } from "cookies-next";
+import { useStore } from "../../../src/store";
 
 
 const MenuLinks =  (user: users) => {
 
-  // console.log('User no Menu Links: ', user);
+  const [userZustand, setUserGlobal, removeUserGlobal] = useStore((state) => [
+    state.user,
+    state.setUserGlobal,
+    state.removeUserGlobal,
+  ]);  // console.log('User no Menu Links: ', user);
   const router = useRouter();
   const logout = async () => {
     // router.push("/api/logout");
+    removeUserGlobal();
     deleteCookie('userLogged');
     router.push('/login');
   };
