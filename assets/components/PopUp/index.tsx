@@ -50,6 +50,7 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
     useState("Colaborador");
 
   const [searchManager, setSearchManager] = useState<string>("");
+  const [searchCollaborators, setSearchCollaborators] = useState<string>("");
 
   const [selectedCollaborator, setSelectedCollaborator] =
     useState<users | null>();
@@ -170,22 +171,11 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
     console.log("onchange", searchManager);
     const { value }: string | any = e.target;
     setSearchManager((prev) => value);
-
-    setTimeout(async () => {
-      await axios
-        .get("/api/users/fetchMangerUsers", {
-          params: { id: companyId, type: 1, valueInput: searchManager },
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            console.log("RES DO AXIOS");
-            const data = res.data;
-            console.log("Onchange search→", res.data);
-            setGestores(data);
-          }
-        })
-        .catch((err) => console.log(err));
-    }, 1000);
+  }
+  async function handleSearchCollaboratorChange(e) {
+    console.log("onchange", searchCollaborators);
+    const { value }: string | any = e.target;
+    setSearchCollaborators((prev) => value);
   }
 
   function selecionarGestor(e, user) {
@@ -299,7 +289,7 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
                   <ListUsers id="gestor">
                     <ul>
                       {gestores
-                        ? gestores.map((user) => {
+                        ? gestores.filter(item => item.name.includes(searchManager)).map((user) => {
                             return (
                               <li key={user.id} id={user.id}>
                                 <User>
@@ -360,6 +350,8 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
                     <InputCard
                       id="colaborador"
                       placeholder={digiteColaboradorAqui}
+                      value={searchCollaborators}
+                      onChange={(e)=> handleSearchCollaboratorChange(e)}
                     />
                     <FontAwesomeIcon icon={faUser} />
                   </UserRole>
@@ -369,7 +361,7 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
                   <ListUsers id="colaborador">
                     <ul>
                       {colaboradores
-                        ? colaboradores.map((user) => {
+                        ? colaboradores.filter(item => item.name.includes(searchCollaborators)).map((user) => {
                             return (
                               <li key={user.id} id={user.id}>
                                 <User>
