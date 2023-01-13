@@ -1,39 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./styles";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { users } from "@prisma/client";
 import { deleteCookie } from "cookies-next";
 import { useStore } from "../../../src/store";
 
+type Props = {
+  userName: string;
+  userPicture: string;
+  userCompany: string;
+};
 
-const MenuLinks =  (user: users) => {
-
+const MenuLinks = ({ userName, userPicture, userCompany }: Props) => {
   const [userZustand, setUserGlobal, removeUserGlobal] = useStore((state) => [
     state.user,
     state.setUserGlobal,
     state.removeUserGlobal,
-  ]);  // console.log('User no Menu Links: ', user);
+  ]); // console.log('User no Menu Links: ', user);
   const router = useRouter();
+  const pathname = router.pathname;
+
+  const selectedColor = "#7559F2";
+
   const logout = async () => {
     // router.push("/api/logout");
     removeUserGlobal();
-    deleteCookie('userLogged');
-    router.push('/login');
+    deleteCookie("userLogged");
+    router.push("/login");
   };
-
+  console.log("Router", router);
   return (
     <S.Container>
       <S.Navigation>
         <S.Button>
           <FontAwesomeIcon icon={faBuilding} size="xl" /> Equipes
         </S.Button>
-        <S.Button>
+        {/* <S.Button>
           <FontAwesomeIcon icon={faBuilding} size="xl" /> one on one
-        </S.Button>
+        </S.Button> */}
         <S.Button>
           <FontAwesomeIcon icon={faBuilding} size="xl" /> Minha Empresa
         </S.Button>
@@ -41,24 +48,26 @@ const MenuLinks =  (user: users) => {
 
       <S.MenuFooter>
         <S.Button
+          color={pathname === "/company" ? selectedColor : ""}
           onClick={() => {
             router.push("/company");
           }}
         >
-          <FontAwesomeIcon icon={faDoorOpen} size="xl" /> {user.userCompany}
+          <FontAwesomeIcon icon={faBuilding} size="xl" /> {userCompany}
         </S.Button>
 
-        <S.User>
+        <S.User >
           <S.Button
+          color={pathname === "/users/profile" ? selectedColor : ""}
             onClick={() => {
               router.push("/users/profile");
             }}
           >
             <>
-            <div>
-              <Image src={ user.userPicture} alt="IMG" width="24" height="24" />
-            </div>
-            {`${user.userName}`}
+              <div>
+                <Image src={userPicture} alt="IMG" width="24" height="24" />
+              </div>
+              {userName}
             </>
           </S.Button>
         </S.User>

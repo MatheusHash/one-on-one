@@ -32,7 +32,7 @@ export default function UserData({ UserData }: users) {
       ...user,
       [id]: value,
     }));
-    console.log(user);
+    // console.log(user);
   };
 
   async function sendUpdate(id: string, value: string) {

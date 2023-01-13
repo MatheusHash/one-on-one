@@ -48,6 +48,8 @@ export default function Company(company: company) {
     const { id, value } = e.target;
     sendUpdate(id, value);
   };
+  const selectedColor = '#7559F2'
+
 
   const [showProfileData, setShowProfileData] = useState<string>("empresa");
   function Show(e: MouseEvent) {
@@ -65,13 +67,16 @@ export default function Company(company: company) {
   return (
     <Container>
       <Header>
-        <TextAction  id="op" onClick={(e) => Show(e)}>
+        <TextAction  id="op" onClick={(e) => Show(e)}
+          color={showProfileData === "op" ? selectedColor : ""}>
           MINHAS <span id="op">OPÇÕES</span>
         </TextAction>
-        <TextAction id="empresa" onClick={(e) => Show(e)}>
+        <TextAction id="empresa" onClick={(e) => Show(e)}
+          color={showProfileData === "empresa" ? selectedColor : ""}>
           MINHA <span id="empresa">EMPRESA</span>
         </TextAction>
-        <TextAction id="time" onClick={(e) => Show(e)}>
+        <TextAction id="time" onClick={(e) => Show(e)}
+          color={showProfileData === "time" ? selectedColor : ""}>
           MEU <span id="time">TIME</span>
         </TextAction>
       </Header>

@@ -19,7 +19,7 @@ import { users } from "@prisma/client";
 export default function UserData({UserData}: users) {
 
   const dataUser = UserData.Data.user;
-  console.log("ID DO USER", dataUser.id)
+  // console.log("ID DO USER", dataUser.id)
   const [user, setUser] = useState<users>(
     dataUser
   );
@@ -30,11 +30,11 @@ export default function UserData({UserData}: users) {
       ...user,
       [id]: value,
     }));
-    console.log(user)
+    // console.log(user)
   }
 
   async function sendUpdate(id: string, value: string){
-    console.log([id],value);
+    // console.log([id],value);
     await axios.put('/api/users/user',{
       userId: dataUser.id,
       field:{

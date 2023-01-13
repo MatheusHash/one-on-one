@@ -47,13 +47,13 @@ export const DivContent = styled.article`
   min-height: 80vh;
   display: grid;
   padding: 1em;
-  background-color: ${theme.colorPrimary};
+  background-color: ${props => props.color ?  props.color : theme.colorPrimary };
   margin: 0;
 `;
 
 export const Section = styled.section`
   background-color: ${theme.colorSecond};
-  width: calc(100vw - 280px);
+  width: 100%;
   height: 150vh;
   overflow-y: auto;
   padding: 2em;
@@ -94,6 +94,7 @@ export const Header = styled.header`
 `;
 
 export const BrandStyle = styled.span`
+cursor: pointer;
   display: flex;
   justify-content: center;
   img {
@@ -109,6 +110,6 @@ export const GridMainLayout = styled.div`
   color: #7559f2;
   /* height: 100vh; */
   display: grid;
-  grid-template-columns: 280px auto;
+  grid-template-columns: 250px auto;
   overflow: hidden;
 `;

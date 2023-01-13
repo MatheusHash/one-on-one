@@ -27,9 +27,9 @@ async function criarUsuario(usuario: users, company: object | any) {
   const prisma = new PrismaClient();
   const { name, email, tel, password, company_id }: string | null | any =
     usuario;
-  console.log("USUARIO", usuario);
+  // console.log("USUARIO", usuario);
   const hash: string = await bcrypt.hash(password, 4);
-  console.log(hash);
+  // console.log(hash);
   if (company) {
     const user: users | null = await prisma.users.create({
       data: {
@@ -98,7 +98,7 @@ async function updateUserField(field, id: string) {
           [key]: value,
         },
       });
-      console.log(`${key}: ${value}`);
+      // console.log(`${key}: ${value}`);
     }
   }
 }
@@ -115,7 +115,7 @@ async function findUser(id: string): Promise<users | string> {
       company: true,
     },
   });
-  console.log(user);
+  // console.log(user);
   if (user) return user;
   return "Usuário não encontrado!";
 }
@@ -130,7 +130,7 @@ export default async function handler(
   }
 
   if (request.method === "GET" && request.query.id) {
-    console.log("aqui", request.query);
+    // console.log("aqui", request.query);
     const user = await findUser(request.query.id.toString());
 
     return response.status(200).json(user);
@@ -144,7 +144,7 @@ export default async function handler(
         request.body;
 
       const { user, mensagem } = await criarUsuario(mainUser, company);
-      console.log("user cadastrado:\n", user);
+      // console.log("user cadastrado:\n", user);
       if (team?.length > 0 && user) {
         const colaboradores: { message: string } =
           await criarUsuariosCollaboradores(team, user.company_id);

@@ -25,7 +25,7 @@ async function findUserWithPicture(id: string): Promise<users | string> {
     where: { id },
     select: {id:true, profilePicture: true, name:true,email: true, company: true },
   });
-  console.log(user);
+  // console.log(user);
   if (user) return user;
   return "Usuário não encontrado!";
 }
@@ -34,9 +34,9 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse<Data>
 ) {
-    console.log("Query",request.query)
+    // console.log("Query",request.query)
   if (request.method === "GET" && request.query.id) {
-    console.log("Get the image profile", request.query);
+    // console.log("Get the image profile", request.query);
     const user = await findUserWithPicture(request.query.id.toString());
 
     return response.status(200).json(user);

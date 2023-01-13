@@ -54,7 +54,7 @@ export const TextAction = styled.h4`
   font-weight: 400;
   font-size: 16px;
   line-height: 23px;
-  color: ${ props => props.selectedColor ? '#7559F2' : '#fff'};
+  color: ${ props => props.color ? props.color : '#fff'};
   padding-inline: 50px;
   :nth-child(2){
     border-left: solid 2px ${theme.InputBorder};

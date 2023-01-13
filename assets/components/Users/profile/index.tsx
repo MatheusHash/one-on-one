@@ -4,9 +4,9 @@ import PasswordForm from "./PasswordForm/index";
 import UserData from "./UserData";
 import { users } from "@prisma/client";
 
-export default function UserProfile({Data}: users) {
+export default function UserProfile({ Data }: users) {
   const [showProfileData, setShowProfileData] = useState<boolean>(true);
-  console.log('User Profile: ', Data);
+  // console.log('User Profile: ', Data);
   function Show(e: MouseEvent) {
     if (e.target?.id == "profile") {
       setShowProfileData(true);
@@ -17,17 +17,26 @@ export default function UserProfile({Data}: users) {
     }
   }
 
+  const selectedColor = '#7559F2';
   return (
     <Container>
       <Header>
-        <TextAction id="profile" onClick={(e) => Show(e)}>
+        <TextAction
+          color={showProfileData ? selectedColor : ""}
+          id="profile"
+          onClick={(e) => Show(e)}
+        >
           MEU <span id="profile">PERFIL</span>
         </TextAction>
-        <TextAction id="password" onClick={(e) => Show(e)}>
+        <TextAction
+          id="password"
+          onClick={(e) => Show(e)}
+          color={!showProfileData ? selectedColor : ""}
+        >
           MINHA <span id="password">SENHA</span>
         </TextAction>
       </Header>
-      {showProfileData ? <UserData UserData={{Data}} /> : <PasswordForm />}
+      {showProfileData ? <UserData UserData={{ Data }} /> : <PasswordForm />}
     </Container>
   );
 }

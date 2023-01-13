@@ -29,7 +29,7 @@ export default function FormularioLogin() {
       ...loginData,
       [id]: value,
     }));
-    console.log(loginData);
+    // console.log(loginData);
   }
   const [userZustand, setUserGlobal, removeUserGlobal] = useStore((state) => [
     state.user,
@@ -41,11 +41,11 @@ export default function FormularioLogin() {
     e.preventDefault();
     await axios.post("/api/auth/login", loginData).then((res) => {
       if (res.data.tk) {
-        console.log("res do Login", res.data.user);
+        // console.log("res do Login", res.data.user);
         setUserLog(res.data.user);
 
         const encodedUser = EncondeData(res.data.user);
-        console.log("Encode", encodedUser);
+        // console.log("Encode", encodedUser);
         setUserGlobal(encodedUser);
         setCookie("userLogged", res.data.tk);
         router.push("/dashboard");
