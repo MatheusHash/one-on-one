@@ -14,7 +14,7 @@ export const Navigation = styled.div`
 `
 
 export const Button = styled.button`
-    color: #A59AD4;
+    color: ${props => props.color ? props.color : '#A59AD4'};
     text-align: left;
     background: none;
     border: none;

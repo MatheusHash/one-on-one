@@ -21,6 +21,8 @@ model users {
 
  tel  String?
 
+ profilePicture String?
+
   //Cada usuário pertencea a uma empresa
   company_id String  @db.ObjectId
   company    company? @relation(fields: [company_id], references: [id])

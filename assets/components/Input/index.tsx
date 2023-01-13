@@ -11,7 +11,7 @@ type Props = {
 export function Input({Placeholder, Icon}: Props){
     return(
         <S.Div>
-            <S.Input placeholder={Placeholder}/>
+            <S.Input type={'password'} placeholder={Placeholder}/>
             <S.Icon> 
                 <FontAwesomeIcon icon={Icon} size="lg"/>
             </S.Icon>
