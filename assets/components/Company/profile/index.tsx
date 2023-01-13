@@ -4,10 +4,10 @@ import PasswordForm from "./PasswordForm/index";
 import UserData from "./UserData";
 import { users } from "@prisma/client";
 
-export default function UserProfile({Data}: users) {
+export default function UserProfile({Data}: users | any) {
   const [showProfileData, setShowProfileData] = useState<boolean>(true);
-  console.log('User Profile: ', Data);
-  function Show(e: MouseEvent) {
+  // console.log('User Profile: ', Data);
+  function Show(e: React.MouseEvent | any) {
     if (e.target?.id == "profile") {
       setShowProfileData(true);
       return;

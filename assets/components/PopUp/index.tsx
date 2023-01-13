@@ -39,6 +39,7 @@ interface OneOnOne {
   team_name: string;
   manager_id: string;
   collaborator_id: string;
+  users_IDs?: Array<string>;
 }
 
 export default function PopUp({ setShowPopUp, companyId, userId }) {
@@ -67,11 +68,12 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
     company_id: companyId,
     manager_id: "",
     collaborator_id: "",
+    users_IDs: [],
   });
 
   async function showListUsers(e: any) {
     e.preventDefault();
-    console.log(e.target.tagName);
+    // console.log(e.target.tagName);
 
     if (e.target.id == "equipe") {
       setShowDropdownTeams(true);
@@ -147,33 +149,39 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
     fetchUsers();
   }, [setShowPopUp]);
 
-  console.log("CompanyId", companyId);
+  // console.log("CompanyId", companyId);
 
   async function submitData(e) {
     e.preventDefault();
     console.log("ENVIAR DADOS DO ONEONONE\n");
+    if (oneonone)
+      oneonone.users_IDs =[ oneonone.manager_id, oneonone.collaborator_id];
     await axios
       .post("/api/oneonone/createOneonone", { oneonone })
       .then((res) => {
         if (res.status === 200) {
           console.log("Oneonone cadastrado com sucesso!!");
-          console.log(res.data);
-          setSuccess("Sucesso ao registrar: " + oneonone.name + "!");
+          // console.log(res.data);
+          setSuccess("Sucesso ao registrar: " + oneonone?.name ?? '' + "!");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{
+        setSuccess("Falha ao registrar. Tente novamente!\n\n");
+        console.log(err)
+      } 
+      );
 
-    console.log(oneonone);
+    // console.log(oneonone);
     return;
   }
 
   async function handleSearchManagerChange(e) {
-    console.log("onchange", searchManager);
+    // console.log("onchange", searchManager);
     const { value }: string | any = e.target;
     setSearchManager((prev) => value);
   }
   async function handleSearchCollaboratorChange(e) {
-    console.log("onchange", searchCollaborators);
+    // console.log("onchange", searchCollaborators);
     const { value }: string | any = e.target;
     setSearchCollaborators((prev) => value);
   }
@@ -289,29 +297,31 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
                   <ListUsers id="gestor">
                     <ul>
                       {gestores
-                        ? gestores.filter(item => item.name.includes(searchManager)).map((user) => {
-                            return (
-                              <li key={user.id} id={user.id}>
-                                <User>
-                                  <Button
-                                    onClick={(e) => selecionarGestor(e, user)}
-                                  >
-                                    <>
-                                      <div>
-                                        <Image
-                                          src={user.profilePicture ?? ""}
-                                          alt="IMG"
-                                          width={"24"}
-                                          height={"24"}
-                                        />
-                                      </div>
-                                      {user.name}
-                                    </>
-                                  </Button>
-                                </User>
-                              </li>
-                            );
-                          })
+                        ? gestores
+                            .filter((item) => item.name.includes(searchManager))
+                            .map((user) => {
+                              return (
+                                <li key={user.id} id={user.id}>
+                                  <User>
+                                    <Button
+                                      onClick={(e) => selecionarGestor(e, user)}
+                                    >
+                                      <>
+                                        <div>
+                                          <Image
+                                            src={user.profilePicture ?? ""}
+                                            alt="IMG"
+                                            width={"24"}
+                                            height={"24"}
+                                          />
+                                        </div>
+                                        {user.name}
+                                      </>
+                                    </Button>
+                                  </User>
+                                </li>
+                              );
+                            })
                         : "Sem resutados..."}
                     </ul>
                   </ListUsers>
@@ -351,7 +361,7 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
                       id="colaborador"
                       placeholder={digiteColaboradorAqui}
                       value={searchCollaborators}
-                      onChange={(e)=> handleSearchCollaboratorChange(e)}
+                      onChange={(e) => handleSearchCollaboratorChange(e)}
                     />
                     <FontAwesomeIcon icon={faUser} />
                   </UserRole>
@@ -361,35 +371,39 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
                   <ListUsers id="colaborador">
                     <ul>
                       {colaboradores
-                        ? colaboradores.filter(item => item.name.includes(searchCollaborators)).map((user) => {
-                            return (
-                              <li key={user.id} id={user.id}>
-                                <User>
-                                  <Button
-                                    onClick={(e) =>
-                                      selecionarColaborador(e, user)
-                                    }
-                                  >
-                                    <>
-                                      <div>
-                                        {user.profilePicture ? (
-                                          <Image
-                                            src={user.profilePicture}
-                                            alt="IMG"
-                                            width={"24"}
-                                            height={"24"}
-                                          />
-                                        ) : (
-                                          <FontAwesomeIcon icon={faUser} />
-                                        )}
-                                      </div>
-                                      {user.name}
-                                    </>
-                                  </Button>
-                                </User>
-                              </li>
-                            );
-                          })
+                        ? colaboradores
+                            .filter((item) =>
+                              item.name.includes(searchCollaborators)
+                            )
+                            .map((user) => {
+                              return (
+                                <li key={user.id} id={user.id}>
+                                  <User>
+                                    <Button
+                                      onClick={(e) =>
+                                        selecionarColaborador(e, user)
+                                      }
+                                    >
+                                      <>
+                                        <div>
+                                          {user.profilePicture ? (
+                                            <Image
+                                              src={user.profilePicture}
+                                              alt="IMG"
+                                              width={"24"}
+                                              height={"24"}
+                                            />
+                                          ) : (
+                                            <FontAwesomeIcon icon={faUser} />
+                                          )}
+                                        </div>
+                                        {user.name}
+                                      </>
+                                    </Button>
+                                  </User>
+                                </li>
+                              );
+                            })
                         : "Sem resutados..."}
                     </ul>
                   </ListUsers>

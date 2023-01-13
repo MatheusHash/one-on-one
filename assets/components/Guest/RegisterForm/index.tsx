@@ -38,7 +38,7 @@ export function RegisterForm() {
       ...prev,
       [id]: value,
     }));
-    console.log(mainUser);
+    // console.log(mainUser);
   }
   function handleCompanyChange(e: any) {
     const { id, value } = e.target;
@@ -46,7 +46,7 @@ export function RegisterForm() {
       ...prev,
       [id]: value,
     }));
-    console.log(company);
+    // console.log(company);
   }
 
   function nextStep(e: any) {
@@ -61,7 +61,7 @@ export function RegisterForm() {
         setCookie("userLogged", res.data.tk);
         router.push("/dashboard");
       }
-      console.log(res.data);
+      // console.log(res.data);
     });
   }
 

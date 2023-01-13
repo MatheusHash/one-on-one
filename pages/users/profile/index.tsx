@@ -7,7 +7,7 @@ import * as jose from "jose";
 import { users } from "@prisma/client";
 
 const Profile = (user: users) => {
-  console.log("first data", user);
+  // console.log("first data", user);
   return (
     <>
       <UserProfile Data={user} />
@@ -34,7 +34,7 @@ export async function getServerSideProps(context: {
   const user = await fetch(
     `http://localhost:3000/api/users/user?id=${user_id}`
   ).then((res) => res.json());
-  console.log("USER: \n", user);
+  // console.log("USER: \n", user);
   return {
     props: {
       user,

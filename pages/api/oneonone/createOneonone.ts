@@ -19,6 +19,7 @@ async function criarOneonone({ oneonone }) {
   delete oneonone.team_name;
   const Oneonone = oneonone;
 
+
   console.log("ONEONONE DA FUNÇÃO DE CRIAÇÃO", Oneonone);
   const newOneonone: oneonone = await prisma.oneonone.create({
     data: Oneonone,

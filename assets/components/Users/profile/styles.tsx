@@ -13,12 +13,11 @@ export const Header = styled.header`
     width: 100%;
     border-bottom: solid 1px ${theme.BorderProfileColor};
 `
-
 export const TextAction = styled.h4`
     font-weight: 400;
     font-size: 16px;
     line-height: 23px;
-    color: #fff;
+    color: ${props => props.color ? props.color :  '#FFFFFF'} ;
     :hover{
         color: ${theme.TextNavigationProfile};
         cursor: pointer;

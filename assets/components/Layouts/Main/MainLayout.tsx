@@ -10,59 +10,24 @@ import OneOnOne from "../../../../public/OneOnOne.svg";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { getCookie } from "cookies-next";
-import { isValid } from "../../../../src/jwt/isValidToken";
-
 interface Props {
   children: ReactNode;
+  color: string | undefined
 }
 
-import { useEffect } from "react";
-import axios from "axios";
 import PopUp from "../../PopUp";
 
 import { useStore } from "../../../../src/store";
 import { useGetFromStore } from "../../../../hooks/zustandHooks";
-import { DecodeData } from "../../../../src/store/js-base64";
+import { useRouter } from "next/router";
 
-const MainLayout = ({ children }: Props) => {
-  const [user, setUser] = useState({});
+
+const MainLayout = ({ children, color }: Props) => {
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
-
-  // const [userApi, setUserApi] = useState<users>();
-
-  useEffect(() => {
-    async function getUserCookie() {
-      const cookie = getCookie("userLogged");
-      // console.log("COOKIE LAYOUT →", cookie);
-      // console.log("executando...");
-      const payload = await isValid(cookie);
-      const user = await payload.user;
-
-      console.log("USER LAYOUT →", user);
-      await axios
-        .get("/api/users/fetchUserWithPicture?id=" + user.id)
-        .then((res) => {
-          if (res.status === 200) {
-            const data = res.data;
-            // console.log("DATADATA →", res.data);
-            setUser(data);
-          }
-        })
-        .catch((err) => console.log(err));
-
-      return user;
-    }
-    console.log("verdadeiro", user);
-    getUserCookie();
-  }, []);
-
   // console.log("Olha o usuario que tenho no layout", user)
-
-
-  const globalUser = useGetFromStore(useStore, (state) => state.user);
-  console.log('GLOBAL USER',globalUser);
-
+  const globalUser = useGetFromStore(useStore, (state: any ) => state.user);
+  // console.log('GLOBAL USER',globalUser);
+  const router = useRouter();
   return (
     <S.GridMainLayout>
       {showPopUp ? (
@@ -71,7 +36,7 @@ const MainLayout = ({ children }: Props) => {
           companyId={ globalUser?.company_id ?? ""}
           setShowPopUp={() => {
             setShowPopUp((prev) => !prev);
-            console.log("teste");
+            // console.log("teste");
           }}
         />
       ) : (
@@ -80,7 +45,7 @@ const MainLayout = ({ children }: Props) => {
       <S.Main>
         <S.Menu>
 
-          <S.BrandStyle>
+          <S.BrandStyle onClick={()=> router.push('/dashboard')}>
             <Image src={OneOnOne} alt="One On One" />
           </S.BrandStyle>
 
@@ -108,8 +73,8 @@ const MainLayout = ({ children }: Props) => {
           </S.AddButton>
         </S.Header>
 
-        <S.Section>
-          <S.DivContent>{children}</S.DivContent>
+        <S.Section >
+          <S.DivContent color={color}>{children}</S.DivContent>
         </S.Section>
       </S.Content>
     </S.GridMainLayout>

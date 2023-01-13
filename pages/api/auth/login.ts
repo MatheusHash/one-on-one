@@ -48,13 +48,13 @@ export default async function handler(
 ) {
   switch (request.method) {
     case "POST": {
-      console.log(request.body);
+      // console.log(request.body);
       const user: users | null | object | string | any = await Login(
         request.body
       );
 
       if (user) {
-        console.log("Login user\n",user);
+        // console.log("Login user\n",user);
         const tk = await getToken(user);
         return response.status(200).json({ user, tk });
       } else

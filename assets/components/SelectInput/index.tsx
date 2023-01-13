@@ -14,9 +14,9 @@ export default function SelectInput({ companyId, showDropdownTeams, selectTeam, 
         .then(async (res) => {
           if (res.status === 200) {
             const data = await res.data;
-            console.log("Data times\n", data.teams);
+            // console.log("Data times\n", data.teams);
             setTeams(data.teams);
-            console.log("TIMES \n", teams);
+            // console.log("TIMES \n", teams);
           }
         })
         .catch((err) => console.log("Error:       ↓", err));
