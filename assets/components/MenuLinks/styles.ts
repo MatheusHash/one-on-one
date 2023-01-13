@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 15px ;
-    height: 55vh;
+    /* margin-left: 15px ; */
+    justify-content: space-between;
+    height: 50vh;
 `
 
 export const Navigation = styled.div`
@@ -21,11 +22,10 @@ export const Button = styled.button`
     width: 100%;
     margin-block: 25px;
     width: 200px;
-
     display: flex;
     align-items: center;
     gap: 15px;
-
+    /* height: 30px; */
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -36,6 +36,20 @@ export const Button = styled.button`
     :hover{
         color: #7559F2;
         cursor: pointer;
+    }
+    
+    &:before{
+        content: '';
+        width: 6px;
+        height: 40px;
+        margin-right: 5px;
+        
+        background-color: ${props => props.color ? props.color : 'transparent'};
+        border-top-left-radius: 0%;
+        border-top-right-radius: 3px;
+        border-bottom-left-radius: 0%;
+        border-bottom-right-radius: 3px;
+        margin-left: -6px;
     }
 `
 
@@ -60,6 +74,5 @@ export const User = styled.div`
 
 export const MenuFooter = styled.div`
     display: grid;
-    
 `
 

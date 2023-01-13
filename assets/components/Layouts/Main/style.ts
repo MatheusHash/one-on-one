@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import theme from "../../../../util/theme";
-
 export const AddButton = styled.button`
   background-color: #59f2cd;
   color: #2a7563;
@@ -47,7 +46,8 @@ export const DivContent = styled.article`
   min-height: 80vh;
   display: grid;
   padding: 1em;
-  background-color: ${props => props.color ?  props.color : theme.colorPrimary };
+  background-color: ${(props) =>
+    props.color ? props.color : theme.colorPrimary};
   margin: 0;
 `;
 
@@ -68,6 +68,7 @@ export const Menu = styled.div`
 `;
 
 export const Main = styled.div`
+
   border-right: solid 1px black;
   background-color: ${theme.colorPrimary};
   height: 100vh;
@@ -94,7 +95,7 @@ export const Header = styled.header`
 `;
 
 export const BrandStyle = styled.span`
-cursor: pointer;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   img {
@@ -105,6 +106,7 @@ cursor: pointer;
 `;
 
 export const GridMainLayout = styled.div`
+
   margin: 0;
   padding: 0;
   color: #7559f2;
