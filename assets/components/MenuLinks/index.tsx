@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./styles";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
+import { faBuilding, faDashboard, faDoorOpen } from "@fortawesome/pro-thin-svg-icons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { deleteCookie } from "cookies-next";
@@ -15,9 +15,7 @@ type Props = {
 };
 
 const MenuLinks = ({ userName, userPicture, userCompany }: Props) => {
-  const [userZustand, setUserGlobal, removeUserGlobal] = useStore((state) => [
-    state.user,
-    state.setUserGlobal,
+  const [removeUserGlobal] = useStore((state) => [
     state.removeUserGlobal,
   ]); // console.log('User no Menu Links: ', user);
   const router = useRouter();
@@ -31,16 +29,12 @@ const MenuLinks = ({ userName, userPicture, userCompany }: Props) => {
     deleteCookie("userLogged");
     router.push("/login");
   };
-  console.log("Router", router);
   return (
     <S.Container>
       <S.Navigation>
-        <S.Button>
-          <FontAwesomeIcon icon={faBuilding} size="xl" /> Equipes
+        <S.Button  onClick={()=> router.push('/dashboard')} color={pathname === "/dashboard" ? selectedColor : ""}>
+          <FontAwesomeIcon icon={faDashboard} size="xl" /> Dashboard
         </S.Button>
-        {/* <S.Button>
-          <FontAwesomeIcon icon={faBuilding} size="xl" /> one on one
-        </S.Button> */}
         <S.Button>
           <FontAwesomeIcon icon={faBuilding} size="xl" /> Minha Empresa
         </S.Button>
@@ -56,9 +50,9 @@ const MenuLinks = ({ userName, userPicture, userCompany }: Props) => {
           <FontAwesomeIcon icon={faBuilding} size="xl" /> {userCompany}
         </S.Button>
 
-        <S.User >
+        <S.User>
           <S.Button
-          color={pathname === "/users/profile" ? selectedColor : ""}
+            color={pathname === "/users/profile" ? selectedColor : ""}
             onClick={() => {
               router.push("/users/profile");
             }}
