@@ -5,7 +5,11 @@ export const Container = styled.div`
     flex-direction: column;
     /* margin-left: 15px ; */
     justify-content: space-between;
-    height: 50vh;
+    height: 65vh;
+    
+    @media (max-width: 780px) {
+        height: 50vh;
+  }
 `
 
 export const Navigation = styled.div`
@@ -13,7 +17,6 @@ export const Navigation = styled.div`
     margin-top: -100px;
     height: 100%;
 `
-
 export const Button = styled.button`
     color: ${props => props.color ? props.color : '#A59AD4'};
     text-align: left;
@@ -25,7 +28,6 @@ export const Button = styled.button`
     display: flex;
     align-items: center;
     gap: 15px;
-    /* height: 30px; */
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -40,7 +42,7 @@ export const Button = styled.button`
     
     &:before{
         content: '';
-        width: 6px;
+        width: 5px;
         height: 40px;
         margin-right: 5px;
         
@@ -50,6 +52,7 @@ export const Button = styled.button`
         border-bottom-left-radius: 0%;
         border-bottom-right-radius: 3px;
         margin-left: -6px;
+        
     }
 `
 

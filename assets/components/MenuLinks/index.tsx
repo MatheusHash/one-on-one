@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./styles";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,9 +15,7 @@ type Props = {
 };
 
 const MenuLinks = ({ userName, userPicture, userCompany }: Props) => {
-  const [userZustand, setUserGlobal, removeUserGlobal] = useStore((state) => [
-    state.user,
-    state.setUserGlobal,
+  const [removeUserGlobal] = useStore((state) => [
     state.removeUserGlobal,
   ]); // console.log('User no Menu Links: ', user);
   const router = useRouter();

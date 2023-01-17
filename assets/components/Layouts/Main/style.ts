@@ -54,9 +54,9 @@ export const DivContent = styled.article`
 export const Section = styled.section`
   background-color: ${theme.colorSecond};
   width: 100%;
-  height: 150vh;
   overflow-y: auto;
   padding: 2em;
+  height: 100%;
 `;
 
 export const Menu = styled.div`
@@ -68,7 +68,6 @@ export const Menu = styled.div`
 `;
 
 export const Main = styled.div`
-
   border-right: solid 1px black;
   background-color: ${theme.colorPrimary};
   height: 100vh;
@@ -106,12 +105,11 @@ export const BrandStyle = styled.span`
 `;
 
 export const GridMainLayout = styled.div`
-
   margin: 0;
   padding: 0;
   color: #7559f2;
   /* height: 100vh; */
   display: grid;
-  grid-template-columns: 250px auto;
+  grid-template-columns: 250px 1fr;
   overflow: hidden;
 `;

@@ -4,15 +4,20 @@ import { Input } from "../Guest/Input";
 import { faEnvelope, faPlus } from "@fortawesome/pro-thin-svg-icons";
 import { FormDynamic } from "./styles"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-export default function DynamicInputs({setTeam}: unknown) {
+
+type Props = {
+  setTeam: any
+}
+
+export default function DynamicInputs({setTeam}: Props) {
   const [inputs, newInput] = useState([{ email: "" }, { email: "" }]);
 
-  function addOneInput(e) {
+  function addOneInput(e: any) {
     e.preventDefault();
     newInput([...inputs, { email: "" }]);
   }
 
-  function handleChange(e, index) {
+  function handleChange(e: any, index: number) {
     inputs[index].email = e.target.value;
     setTeam([...inputs])
     // console.log(inputs);
@@ -25,7 +30,7 @@ export default function DynamicInputs({setTeam}: unknown) {
           return (
             <Input
               key={"email" + index}
-              HandleChange={(e) => handleChange(e, index)}
+              HandleChange={(e: any) => handleChange(e, index)}
               Id={"First" + index}
               Type={"text"}
               Icon={faEnvelope}

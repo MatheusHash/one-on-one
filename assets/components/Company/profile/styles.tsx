@@ -3,7 +3,7 @@ import theme from "../../../../util/theme";
 
 
 export const ContainerContentCompanyProfile= styled.div`
-    width: 700px;
+    /* width: 700px; */
     margin: 50px;
 `
 
@@ -70,3 +70,9 @@ export const TextAction = styled.h4`
     font-weight: 700;
   }
 `;
+
+
+export const Time =styled.div`
+display: grid;
+grid-template-columns: 2fr 1fr;
+`
