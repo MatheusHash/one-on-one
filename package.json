@@ -29,6 +29,7 @@
     "react": "18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
+    "react-query": "^3.39.2",
     "styled-components": "^5.3.6",
     "typescript": "4.9.3",
     "typescript-cookie": "^1.0.4",

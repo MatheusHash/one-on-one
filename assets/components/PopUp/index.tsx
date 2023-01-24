@@ -149,29 +149,25 @@ export default function PopUp({ setShowPopUp, companyId, userId }) {
     fetchUsers();
   }, [setShowPopUp]);
 
-  // console.log("CompanyId", companyId);
 
   async function submitData(e) {
     e.preventDefault();
     console.log("ENVIAR DADOS DO ONEONONE\n");
     if (oneonone)
-      oneonone.users_IDs =[ oneonone.manager_id, oneonone.collaborator_id];
+      oneonone.users_IDs = [oneonone.manager_id, oneonone.collaborator_id];
     await axios
       .post("/api/oneonone/createOneonone", { oneonone })
       .then((res) => {
         if (res.status === 200) {
           console.log("Oneonone cadastrado com sucesso!!");
-          // console.log(res.data);
-          setSuccess("Sucesso ao registrar: " + oneonone?.name ?? '' + "!");
+          setSuccess("Sucesso ao registrar: " + oneonone?.name ?? "" + "!");
         }
       })
-      .catch((err) =>{
+      .catch((err) => {
         setSuccess("Falha ao registrar. Tente novamente!\n\n");
-        console.log(err)
-      } 
-      );
+        console.log(err);
+      });
 
-    // console.log(oneonone);
     return;
   }
 

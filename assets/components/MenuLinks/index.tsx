@@ -35,8 +35,8 @@ const MenuLinks = ({ userName, userPicture, userCompany }: Props) => {
         <S.Button  onClick={()=> router.push('/dashboard')} color={pathname === "/dashboard" ? selectedColor : ""}>
           <FontAwesomeIcon icon={faDashboard} size="xl" /> Dashboard
         </S.Button>
-        <S.Button>
-          <FontAwesomeIcon icon={faBuilding} size="xl" /> Minha Empresa
+        <S.Button onClick={()=> router.push('/sectors')} color={pathname === "/sectors" ? selectedColor : ""}>
+          <FontAwesomeIcon icon={faBuilding} size="xl" /> Setores
         </S.Button>
       </S.Navigation>
 
